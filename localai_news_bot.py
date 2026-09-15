@@ -63,8 +63,8 @@ def sitemap(url, include=None, exclude=None, label=None, path_prefix=None, title
             "title_exclude": title_exclude or []}
 
 
-LOCAL_TITLE_EXCLUDE = ["Course -", "Bootcamp", "Masterclass", "Udemy", "Coursera", "Tutorial",
-                       "使ってみた", "とは?", "始め方", "初心者向け"]
+LOCAL_TITLE_EXCLUDE = ["Course -", "Bootcamp", "Masterclass", "Udemy", "Coursera",
+                       "Tutorial", "使ってみた", "とは?", "始め方", "初心者向け", "入門"]
 
 COL_TTS, COL_MUSIC, COL_VIDEO, COL_IMAGE, COL_FINETUNE = 0x00BFA5, 0xE91E63, 0xFF5722, 0xFFC107, 0x673AB7
 
@@ -72,12 +72,12 @@ TTS_TERMS = ["StyleTTS2", "F5-TTS", "Zonos", "Kokoro-TTS", "MetaVoice", "KaniTTS
              "VoiceCraft", "Coqui TTS", "XTTS", "Bark TTS", "VOICEVOX", "VOICEROID",
              "pyopenjtalk", "RVC", "So-VITS-SVC", "voice cloning", "音声合成",
              "text-to-speech", "voice synthesis", "Vibevoice", "MegaTTS", "OpenVoice",
-             "GPT-SoVITS", "Fish Speech", "Piper TTS"]
-TTS_EXCLUDE = ["ElevenLabs subscription", "Suno subscription", "Udio paid", "訴訟"]
+             "GPT-SoVITS", "Fish Speech", "Piper TTS", "音声クローン"]
+TTS_EXCLUDE = ["ElevenLabs subscription", "訴訟", "詐欺利用"]
 MUSIC_TERMS = ["MusicGen", "AudioCraft", "Stable Audio", "AudioLDM", "Riffusion", "Magenta",
-               "YuE", "Levo", "MusicLM", "Loudly open", "音楽生成AI", "music generation",
-               "text-to-music", "AI音楽", "AI作曲", "Suno open", "melody", "Jukebox",
-               "MusicLDM", "MusicHiFi"]
+               "YuE", "Levo", "MusicLM", "音楽生成AI", "music generation",
+               "text-to-music", "AI音楽", "AI作曲", "Suno open", "Jukebox",
+               "MusicLDM", "MusicHiFi", "AudioBox", "自動作曲"]
 MUSIC_EXCLUDE = ["Spotify Wrapped", "Apple Music プラン", "配信サービス開始", "ライブ配信", "訴訟",
                  "音楽業界", "レコード会社"]
 VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "LTX-Video", "LTX Video", "Mochi 1", "CogVideoX", "HunyuanVideo",
@@ -97,7 +97,7 @@ FINETUNE_TERMS = ["LoRA", "QLoRA", "DoRA", "LongLoRA", "DPO", "IPO", "KTO", "ORP
                   "SimPO", "SFT", "RLHF", "RLAIF", "Unsloth", "axolotl", "TRL",
                   "LLaMA-Factory", "Torchtune", "mlx-lm", "PEFT", "ファインチューニング",
                   "fine-tuning", "fine-tune", "継続事前学習", "instruction tuning",
-                  "distillation", "蒸留学習", "synthetic data", "データ合成", "TRL"]
+                  "distillation", "蒸留学習", "synthetic data", "データ合成"]
 FINETUNE_EXCLUDE = ["株価", "資金調達"]
 
 TOPICS = [
@@ -106,22 +106,27 @@ TOPICS = [
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=TTS+OR+voice+cloning&restrict_sr=on&sort=new&limit=20", include=TTS_TERMS),
      gn('StyleTTS2 OR "F5-TTS" OR Zonos OR "Kokoro TTS" OR MetaVoice OR VoiceCraft OR "Coqui TTS" OR "Fish Speech" OR "GPT-SoVITS"',
         include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"音声合成AI" OR "VOICEVOX" OR "音声クローニング" OR "TTS"',
+     gn('"音声合成AI" OR "VOICEVOX" OR "音声クローニング" OR "音声クローン" OR "TTS"',
         include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     rss("https://news.google.com/rss/search?q=%22text%20to%20speech%22%20OR%20%22voice%20cloning%22%20OR%20StyleTTS%20OR%20%22F5-TTS%22&hl=en-US&gl=US&ceid=US:en",
+     rss("https://news.google.com/rss/search?q=%22text%20to%20speech%22%20OR%20%22voice%20cloning%22%20OR%20StyleTTS%20OR%20%22F5-TTS%22%20OR%20%22GPT-SoVITS%22&hl=en-US&gl=US&ceid=US:en",
          include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://zenn.dev/topics/tts/feed", include=TTS_TERMS),
+     rss("https://zenn.dev/topics/voicevox/feed", include=TTS_TERMS + ["合成", "音声"]),
+     rss("https://zenn.dev/topics/ai/feed", include=TTS_TERMS + ["音声合成", "TTS"]),
      rss("https://huggingface.co/blog/feed.xml", include=TTS_TERMS + ["audio", "speech"])]},
 
  {"num":"🎵","name":"ローカル音楽ai速報","env":"MUSIC","color":COL_MUSIC,"sources":[
      rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=15", include=MUSIC_TERMS),
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=music+generation+OR+MusicGen&restrict_sr=on&sort=new&limit=15",
          include=MUSIC_TERMS),
-     gn('MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion OR "text-to-music" OR "AI music generation"',
+     gn('MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion OR "text-to-music" OR "AI music generation" OR AudioBox',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"音楽生成AI" OR "AI作曲" OR "AI音楽"',
+     gn('"音楽生成AI" OR "AI作曲" OR "AI音楽" OR "自動作曲"',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=MusicGen%20OR%20%22Stable%20Audio%22%20OR%20AudioLDM%20OR%20Riffusion%20OR%20%22music%20generation%22&hl=en-US&gl=US&ceid=US:en",
          include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://zenn.dev/topics/musicgen/feed", include=MUSIC_TERMS),
+     rss("https://zenn.dev/topics/ai/feed", include=MUSIC_TERMS + ["音楽", "作曲"]),
      rss("https://huggingface.co/blog/feed.xml", include=MUSIC_TERMS + ["music", "audio"])]},
 
  {"num":"🎬","name":"ローカル動画ai速報","env":"VIDEO","color":COL_VIDEO,"sources":[
@@ -129,35 +134,46 @@ TOPICS = [
          include=VIDEO_TERMS),
      rss("https://www.reddit.com/r/comfyui/search.rss?q=video+OR+animate&restrict_sr=on&sort=new&limit=15",
          include=VIDEO_TERMS + ["ComfyUI"]),
-     gn('"Wan 2.1" OR "LTX-Video" OR "CogVideoX" OR HunyuanVideo OR "Open-Sora" OR AnimateDiff OR "Stable Video Diffusion" OR "Mochi 1"',
+     gn('"Wan 2.1" OR "LTX-Video" OR "CogVideoX" OR HunyuanVideo OR "Open-Sora" OR AnimateDiff OR "Stable Video Diffusion" OR "Mochi 1" OR "Pyramid Flow"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"動画生成AI" OR "AI動画生成" OR "動画生成"',
+     gn('"動画生成AI" OR "AI動画生成" OR "動画生成モデル"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     rss("https://news.google.com/rss/search?q=%22text%20to%20video%22%20OR%20%22image%20to%20video%22%20OR%20%22AnimateDiff%22%20OR%20%22Stable%20Video%22%20OR%20%22Wan%202%22&hl=en-US&gl=US&ceid=US:en",
+     rss("https://news.google.com/rss/search?q=%22text%20to%20video%22%20OR%20%22image%20to%20video%22%20OR%20%22AnimateDiff%22%20OR%20%22Stable%20Video%22%20OR%20%22Wan%202%22%20OR%20%22CogVideoX%22&hl=en-US&gl=US&ceid=US:en",
          include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://zenn.dev/topics/animatediff/feed", include=VIDEO_TERMS),
+     rss("https://zenn.dev/topics/wan/feed", include=VIDEO_TERMS + ["動画", "video"]),
+     rss("https://zenn.dev/topics/comfyui/feed", include=VIDEO_TERMS + ["ComfyUI", "動画", "video"]),
      rss("https://huggingface.co/blog/feed.xml", include=VIDEO_TERMS + ["video"])]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/hot/.rss?limit=30", include=IMAGE_TERMS),
      rss("https://www.reddit.com/r/comfyui/hot/.rss?limit=15", include=IMAGE_TERMS + ["workflow", "ComfyUI"]),
      rss("https://www.reddit.com/r/FluxAI/hot/.rss?limit=15", include=IMAGE_TERMS + ["Flux"]),
-     gn('"Flux.1" OR "SD 3.5" OR "Stable Diffusion 3.5" OR ComfyUI OR SDXL OR "Playground v2.5" OR HiDream OR SANA',
+     gn('"Flux.1" OR "SD 3.5" OR "Stable Diffusion 3.5" OR ComfyUI OR SDXL OR "Playground v2.5" OR HiDream OR SANA OR Kolors',
         include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      gn('"画像生成AI" OR "AI画像生成" OR "ComfyUI" OR "Automatic1111"',
         include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=%22Flux.1%22%20OR%20%22Stable%20Diffusion%22%20OR%20%22SDXL%22%20OR%20%22ComfyUI%22%20OR%20%22Playground%20v2%22&hl=en-US&gl=US&ceid=US:en",
          include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://zenn.dev/topics/stablediffusion/feed", include=IMAGE_TERMS),
+     rss("https://zenn.dev/topics/comfyui/feed", include=IMAGE_TERMS),
+     rss("https://zenn.dev/topics/flux/feed", include=IMAGE_TERMS + ["Flux"]),
+     rss("https://zenn.dev/topics/lora/feed", include=IMAGE_TERMS + ["画像"]),
      rss("https://huggingface.co/blog/feed.xml", include=IMAGE_TERMS + ["diffusion"])]},
 
  {"num":"🔧","name":"ローカル学習・finetune速報","env":"FINETUNE","color":COL_FINETUNE,"sources":[
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=finetune+OR+LoRA+OR+DPO+OR+Unsloth&restrict_sr=on&sort=new&limit=25",
          include=FINETUNE_TERMS),
-     gn('LoRA OR QLoRA OR DPO OR Unsloth OR axolotl OR "LLaMA-Factory" OR mlx-lm OR ORPO OR SimPO',
+     gn('LoRA OR QLoRA OR DPO OR Unsloth OR axolotl OR "LLaMA-Factory" OR mlx-lm OR ORPO OR SimPO OR DoRA',
         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"ファインチューニング" OR "LoRA学習" OR "DPO学習" OR "継続事前学習"',
+     gn('"ファインチューニング" OR "LoRA学習" OR "DPO学習" OR "継続事前学習" OR "モデル学習"',
         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     rss("https://news.google.com/rss/search?q=%22fine-tuning%22%20OR%20%22LoRA%22%20OR%20%22DPO%22%20OR%20%22Unsloth%22%20OR%20%22axolotl%22&hl=en-US&gl=US&ceid=US:en",
+     rss("https://news.google.com/rss/search?q=%22fine-tuning%22%20OR%20%22LoRA%22%20OR%20%22DPO%22%20OR%20%22Unsloth%22%20OR%20%22axolotl%22%20OR%20%22QLoRA%22&hl=en-US&gl=US&ceid=US:en",
          include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://zenn.dev/topics/finetuning/feed", include=FINETUNE_TERMS),
+     rss("https://zenn.dev/topics/lora/feed", include=FINETUNE_TERMS),
+     rss("https://zenn.dev/topics/dpo/feed", include=FINETUNE_TERMS + ["LLM"]),
+     rss("https://zenn.dev/topics/llm/feed", include=FINETUNE_TERMS + ["学習", "fine-tuning"]),
      rss("https://huggingface.co/blog/feed.xml", include=FINETUNE_TERMS + ["training", "fine-tune"])]},
 ]
 
