@@ -1,4 +1,4 @@
-name: AIラボ ローカルAI (Media: TTS/Music/Video/Image/Finetune)
+name: AIラボ ローカルAI Media (TTS Music Video Image Finetune)
 
 on:
   schedule:
@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: pip install feedparser argostranslate
 
-      - name: Run AIラボ ローカルAI (Media: TTS/Music/Video/Image/Finetune)
+      - name: Run AIラボ ローカルAI Media (TTS Music Video Image Finetune)
         env:
           DISCORD_LOCALAI_WEBHOOK_TTS: ${{ secrets.DISCORD_LOCALAI_WEBHOOK_TTS }}
           DISCORD_LOCALAI_WEBHOOK_MUSIC: ${{ secrets.DISCORD_LOCALAI_WEBHOOK_MUSIC }}
