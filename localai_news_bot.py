@@ -93,7 +93,12 @@ VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "LTX-Video", "LTX Video", "Mochi 1", "CogVid
                "image-to-video", "AI動画生成", "video generation", "Genmo", "Rhymes Allegro",
                "CausVid", "LivePortrait", "MuseTalk"]
 VIDEO_EXCLUDE = ["訴訟", "著作権訴訟", "映画スタジオ提訴", "Sora subscription", "配信サービス",
-                 "俳優", "映画館", "興行収入"]
+                 "俳優", "映画館", "興行収入",
+                 # ★2026-09-15 実測ノイズ: 数学論文/Codex/AI一般が誤ヒット
+                 "Lean 4", "定理証明", "低ランクのテンソル", "テンソルの完成",
+                 "Schatten", "シャテンプノーム", "テンソルのスキャン", "Codex",
+                 "識別子", "中学生でもわかる", "投稿前予測", "セキュリティ指摘",
+                 "AGI", "GPT-5", "GPT-6"]
 # ★2026-09-15 実測: SANA=地名Sana'a/Sana Air Quality誤ヒット → 固有名詞化 "NVIDIA SANA"
 IMAGE_TERMS = ["Flux.1", "Flux dev", "Flux schnell", "SD3.5", "Stable Diffusion 3.5",
                "Stable Diffusion 3", "SDXL", "Kolors model", "Playground v2.5", "HiDream",
@@ -112,7 +117,17 @@ FINETUNE_TERMS = ["LoRA training", "LoRA adapter", "LoRA fine", "QLoRA", "DoRA f
                   "fine-tuning", "fine-tune LLM", "継続事前学習", "instruction tuning",
                   "distillation", "蒸留学習", "synthetic data", "データ合成"]
 FINETUNE_EXCLUDE = ["株価", "資金調達", "Trial begins", "Mount Dora", "wesh.com", "FOX 35",
-                    "Spectrum News", "trial for", "Killing of", "Orlando"]
+                    "Spectrum News", "trial for", "Killing of", "Orlando",
+                    # ★2026-09-15 実測ノイズ: LoRa無線通信/人名Lora/自動車チューニング
+                    "LoRa通信", "LoRa無線", "LoRaで通信", "LoRa 通信", "LoRa 無線",
+                    "介護施設", "離床", "転倒", "徘徊", "Meshtastic", "エフエージェイ",
+                    "LiDAR", "RTH-25", "MeshCore",
+                    "Obituary", "訃報", "Cooley", "Gainesville", "Legacy obituary",
+                    "日々の信仰", "buzzmusic", "見つけます",
+                    "Motor Fan", "ロードスター", "オートエクゼ", "NDロードスター",
+                    "エンジン", "リビルト",
+                    # ★人名Lora誤ヒット系
+                    "Lora A.", "Lora Cooley", "Lora Kelly", "Lora Jean"]
 
 TOPICS = [
  {"num":"🗣️","name":"ローカルtts速報","env":"TTS","color":COL_TTS,"sources":[
@@ -164,11 +179,11 @@ TOPICS = [
      gn('site:x.com "Wan 2.1" OR "LTX-Video" OR "AnimateDiff" OR "CogVideoX" OR "HunyuanVideo" OR "Mochi"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://zenn.dev/topics/animatediff/feed", include=VIDEO_TERMS),
-     rss("https://zenn.dev/topics/wan/feed", include=VIDEO_TERMS + ["動画", "video"]),
-     rss("https://zenn.dev/topics/comfyui/feed", include=VIDEO_TERMS + ["ComfyUI", "動画", "video"]),
-     rss("https://zenn.dev/topics/ai/feed", include=VIDEO_TERMS + ["動画", "video"]),
-     rss("https://huggingface.co/blog/feed.xml", include=VIDEO_TERMS + ["video"]),
-     rss("https://export.arxiv.org/rss/cs.CV", include=VIDEO_TERMS)]},
+     rss("https://zenn.dev/topics/wan/feed", include=VIDEO_TERMS),
+     rss("https://zenn.dev/topics/comfyui/feed", include=VIDEO_TERMS + ["ComfyUI 動画", "ComfyUI video"]),
+     # ★2026-09-15 削除: Zenn t/ai は幅が広すぎて動画無関係の記事が流入(Codex/Lean 4等)
+     rss("https://huggingface.co/blog/feed.xml", include=VIDEO_TERMS + ["video generation", "text-to-video"]),
+     rss("https://export.arxiv.org/rss/cs.CV", include=VIDEO_TERMS + ["video generation", "text-to-video", "video diffusion"])]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/hot/.rss?limit=30", include=IMAGE_TERMS),
