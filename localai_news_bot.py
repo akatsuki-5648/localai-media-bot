@@ -65,6 +65,10 @@ def sitemap(url, include=None, exclude=None, label=None, path_prefix=None, title
 
 LOCAL_TITLE_EXCLUDE = ["Course -", "Bootcamp", "Masterclass", "Udemy", "Coursera",
                        "Tutorial", "使ってみた", "とは?", "始め方", "初心者向け", "入門"]
+# is_release_version_noise() が参照する
+MODEL_RELEASE_TERMS = ["新モデル", "モデル公開", "オープンウェイト", "提供開始", "generally available",
+                       "open weights", "GPT", "Claude", "Gemini", "Grok", "Llama", "Qwen", "DeepSeek",
+                       "Mistral", "Gemma", "Phi", "released", "release", "launch"]
 
 COL_TTS, COL_MUSIC, COL_VIDEO, COL_IMAGE, COL_FINETUNE = 0x00BFA5, 0xE91E63, 0xFF5722, 0xFFC107, 0x673AB7
 
@@ -113,6 +117,7 @@ TOPICS = [
      rss("https://zenn.dev/topics/tts/feed", include=TTS_TERMS),
      rss("https://zenn.dev/topics/voicevox/feed", include=TTS_TERMS + ["合成", "音声"]),
      rss("https://zenn.dev/topics/ai/feed", include=TTS_TERMS + ["音声合成", "TTS"]),
+     gn('site:x.com "StyleTTS" OR "F5-TTS" OR "Zonos" OR "VOICEVOX" OR "GPT-SoVITS" OR "MetaVoice"', include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://huggingface.co/blog/feed.xml", include=TTS_TERMS + ["audio", "speech"])]},
 
  {"num":"🎵","name":"ローカル音楽ai速報","env":"MUSIC","color":COL_MUSIC,"sources":[
@@ -127,6 +132,7 @@ TOPICS = [
          include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://zenn.dev/topics/musicgen/feed", include=MUSIC_TERMS),
      rss("https://zenn.dev/topics/ai/feed", include=MUSIC_TERMS + ["音楽", "作曲"]),
+     gn('site:x.com "MusicGen" OR "Stable Audio" OR "AudioLDM" OR "Riffusion" OR "AudioBox"', include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://huggingface.co/blog/feed.xml", include=MUSIC_TERMS + ["music", "audio"])]},
 
  {"num":"🎬","name":"ローカル動画ai速報","env":"VIDEO","color":COL_VIDEO,"sources":[
@@ -143,6 +149,7 @@ TOPICS = [
      rss("https://zenn.dev/topics/animatediff/feed", include=VIDEO_TERMS),
      rss("https://zenn.dev/topics/wan/feed", include=VIDEO_TERMS + ["動画", "video"]),
      rss("https://zenn.dev/topics/comfyui/feed", include=VIDEO_TERMS + ["ComfyUI", "動画", "video"]),
+     gn('site:x.com "Wan 2.1" OR "LTX-Video" OR "AnimateDiff" OR "CogVideoX" OR "HunyuanVideo" OR "Mochi"', include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://huggingface.co/blog/feed.xml", include=VIDEO_TERMS + ["video"])]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
@@ -159,6 +166,7 @@ TOPICS = [
      rss("https://zenn.dev/topics/comfyui/feed", include=IMAGE_TERMS),
      rss("https://zenn.dev/topics/flux/feed", include=IMAGE_TERMS + ["Flux"]),
      rss("https://zenn.dev/topics/lora/feed", include=IMAGE_TERMS + ["画像"]),
+     gn('site:x.com "Flux.1" OR "SD 3.5" OR "Stable Diffusion" OR "ComfyUI" OR "SDXL" OR "HiDream"', include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://huggingface.co/blog/feed.xml", include=IMAGE_TERMS + ["diffusion"])]},
 
  {"num":"🔧","name":"ローカル学習・finetune速報","env":"FINETUNE","color":COL_FINETUNE,"sources":[
@@ -174,6 +182,7 @@ TOPICS = [
      rss("https://zenn.dev/topics/lora/feed", include=FINETUNE_TERMS),
      rss("https://zenn.dev/topics/dpo/feed", include=FINETUNE_TERMS + ["LLM"]),
      rss("https://zenn.dev/topics/llm/feed", include=FINETUNE_TERMS + ["学習", "fine-tuning"]),
+     gn('site:x.com "LoRA" OR "QLoRA" OR "DPO" OR "Unsloth" OR "axolotl" OR "fine-tuning"', include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://huggingface.co/blog/feed.xml", include=FINETUNE_TERMS + ["training", "fine-tune"])]},
 ]
 
