@@ -80,13 +80,20 @@ TTS_TERMS = ["StyleTTS2", "F5-TTS", "Zonos-v", "Kokoro-TTS", "MetaVoice", "KaniT
              "GPT-SoVITS", "Fish Speech", "Piper TTS", "音声クローン", "TTSモデル"]
 # ★2026-09-15 実測: TTS=会社略称(HR Path TTS Digital)/車(Audi TTS)/大学(Voice/Craft)誤ヒット → title_excludeで除去
 TTS_EXCLUDE = ["ElevenLabs subscription", "訴訟", "詐欺利用", "HR Path", "TTS digital",
-               "TTSクーペ", "アウディ", "goo-net", "TTS Roadster"]
+               "TTSクーペ", "アウディ", "goo-net", "TTS Roadster",
+               # ★2026-09-16 CDP実測ノイズ: クラウド音声クローン/研修動画/短尺広告
+               "音声クローン", "AI音声クローン", "社内研修", "中小企業向け",
+               "生成AI活用術", "研修動画", "#Shorts", "自動生成する方法"]
 MUSIC_TERMS = ["MusicGen", "AudioCraft", "Stable Audio", "AudioLDM", "Riffusion", "Magenta music",
                "YuE music", "Levo music", "MusicLM", "音楽生成AI", "music generation",
                "text-to-music", "AI音楽", "AI作曲", "Suno open", "Jukebox model",
                "MusicLDM", "MusicHiFi", "AudioBox", "自動作曲", "音楽AI生成"]
 MUSIC_EXCLUDE = ["Spotify Wrapped", "Apple Music プラン", "配信サービス開始", "ライブ配信", "訴訟",
-                 "音楽業界", "レコード会社", "コンサート"]
+                 "音楽業界", "レコード会社", "コンサート",
+                 # ★2026-09-16 CDP実測ノイズ: 著名人インタビュー/クラウドSuno
+                 "さだまさし", "AI作曲どう見る", "Suno", "MEDIAMIXI",
+                 "AI学習にYouTube", "音声データ取得認める", "作曲家インタビュー",
+                 "アーティストインタビュー", "配信認める"]
 VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "LTX-Video", "LTX Video", "Mochi 1", "CogVideoX", "HunyuanVideo",
                "Pyramid Flow", "Open-Sora", "AnimateDiff", "Stable Video Diffusion", "SVD",
                "EasyAnimate", "VideoCrafter", "VGen video", "動画生成AI", "text-to-video",
@@ -98,7 +105,10 @@ VIDEO_EXCLUDE = ["訴訟", "著作権訴訟", "映画スタジオ提訴", "Sora 
                  "Lean 4", "定理証明", "低ランクのテンソル", "テンソルの完成",
                  "Schatten", "シャテンプノーム", "テンソルのスキャン", "Codex",
                  "識別子", "中学生でもわかる", "投稿前予測", "セキュリティ指摘",
-                 "AGI", "GPT-5", "GPT-6"]
+                 "AGI", "GPT-5", "GPT-6",
+                 # ★2026-09-16 CDP実測ノイズ: クラウドText-to-Videoサービス広告
+                 "Creatify", "Boreal", "Creatify Labs", "Text-to-Video AI モデル",
+                 "1セント", "40倍の速度", "unite.ai", "毎秒 1 セント"]
 # ★2026-09-15 実測: SANA=地名Sana'a/Sana Air Quality誤ヒット → 固有名詞化 "NVIDIA SANA"
 IMAGE_TERMS = ["Flux.1", "Flux dev", "Flux schnell", "SD3.5", "Stable Diffusion 3.5",
                "Stable Diffusion 3", "SDXL", "Kolors model", "Playground v2.5", "HiDream",
@@ -107,7 +117,11 @@ IMAGE_TERMS = ["Flux.1", "Flux dev", "Flux schnell", "SD3.5", "Stable Diffusion 
                "civitai", "AI画像生成", "画像生成AI"]
 IMAGE_EXCLUDE = ["訴訟", "著作権訴訟", "ランウェイ", "ファッションブランド", "Marc Jacobs",
                  "コレクション", "ホロライブ", "ときのそら", "ミニスカ", "グラビア", "配信者",
-                 "Yemeni", "Air Quality", "Pristine Healthcare"]
+                 "Yemeni", "Air Quality", "Pristine Healthcare",
+                 # ★2026-09-16 CDP実測ノイズ: アニメコラボ/化粧品広告
+                 "幽遊白書", "幽☆遊☆白書", "蔵馬", "美容ブランド", "La Sana",
+                 "美髪", "美髪指南塾", "玩具人", "TOY PEOPLE",
+                 "アニメコラボ", "コラボ発売", "タッグを組"]
 # ★2026-09-15 実測: 単体LoRA/fine-tuneが裁判ニュース(Mount Dora Trial)誤ヒット → 固有名詞化
 FINETUNE_TERMS = ["LoRA training", "LoRA adapter", "LoRA fine", "QLoRA", "DoRA finetune",
                   "LongLoRA", "DPO training", "DPO fine", "IPO training", "KTO training",
@@ -127,7 +141,10 @@ FINETUNE_EXCLUDE = ["株価", "資金調達", "Trial begins", "Mount Dora", "wes
                     "Motor Fan", "ロードスター", "オートエクゼ", "NDロードスター",
                     "エンジン", "リビルト",
                     # ★人名Lora誤ヒット系
-                    "Lora A.", "Lora Cooley", "Lora Kelly", "Lora Jean"]
+                    "Lora A.", "Lora Cooley", "Lora Kelly", "Lora Jean",
+                    # ★2026-09-16 CDP実測ノイズ: 動画配信ソフト/CloseBox系
+                    "CloseBox", "動画対話システム", "配信用ソフト", "5090で使ったら",
+                    "MiniMax H3生成時間", "AI動画対話", "配信ソフトから"]
 
 TOPICS = [
  {"num":"🗣️","name":"ローカルtts速報","env":"TTS","color":COL_TTS,"sources":[
