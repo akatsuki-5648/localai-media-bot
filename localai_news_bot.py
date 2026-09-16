@@ -33,8 +33,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SEEN_FILE = os.path.join(HERE, "localai_media_seen_urls.json")
 WEBHOOKS_JSON = os.path.join(HERE, "localai_media_webhooks.json")
 PER_SOURCE = 3        # ★速報化: 1ソースから拾う上限
-PER_CHANNEL = 4       # ★速報化: 1chの1回あたり投稿上限
-FRESH_HOURS = 48      # ★速報化: 直近48hの記事だけを速報として拾う(窓外の古い既出は対象外)
+PER_CHANNEL = 6       # ★2026-09-16 盛々: 4→6(1chの1回あたり投稿上限を上げる)
+FRESH_HOURS = 72      # ★2026-09-16 盛々: 48→72(時間窓を広げる・情報量アップ)
 NOW = time.time()     # 実行開始時刻(UTC epoch)。時間窓判定の基準
 UA = "LocalAiBot/1.0 (+https://discord.com)"
 COL_BIZ, COL_FIELD, COL_SUM = 0x00E5FF, 0x00FF9C, 0xFF7A1A
@@ -163,7 +163,10 @@ TOPICS = [
      rss("https://zenn.dev/topics/ai/feed", include=TTS_TERMS + ["音声合成", "TTS"]),
      rss("https://huggingface.co/blog/feed.xml", include=TTS_TERMS + ["audio", "speech"]),
      rss("https://export.arxiv.org/rss/cs.SD", include=TTS_TERMS),
-     rss("https://export.arxiv.org/rss/eess.AS", include=TTS_TERMS)]},
+     rss("https://export.arxiv.org/rss/eess.AS", include=TTS_TERMS),
+     # ★2026-09-16 盛々: Qiitaタグ追加(実測 fresh 2件・低頻度だが日本語良質)
+     rss("https://qiita.com/tags/voicevox/feed", include=TTS_TERMS + ["VOICEVOX", "音声合成"]),
+     rss("https://qiita.com/tags/%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90/feed", include=TTS_TERMS + ["音声合成", "TTS"])]},
 
  {"num":"🎵","name":"ローカル音楽ai速報","env":"MUSIC","color":COL_MUSIC,"sources":[
      rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=15", include=MUSIC_TERMS),
@@ -180,7 +183,10 @@ TOPICS = [
      rss("https://zenn.dev/topics/musicgen/feed", include=MUSIC_TERMS),
      rss("https://zenn.dev/topics/ai/feed", include=MUSIC_TERMS + ["音楽", "作曲"]),
      rss("https://huggingface.co/blog/feed.xml", include=MUSIC_TERMS + ["music", "audio"]),
-     rss("https://export.arxiv.org/rss/cs.SD", include=MUSIC_TERMS)]},
+     rss("https://export.arxiv.org/rss/cs.SD", include=MUSIC_TERMS),
+     # ★2026-09-16 盛々: r/AImusic/hot(実測fresh28) + Qiita音楽生成タグ
+     rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=30", include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE),
+     rss("https://qiita.com/tags/%E9%9F%B3%E6%A5%BD%E7%94%9F%E6%88%90/feed", include=MUSIC_TERMS + ["音楽", "作曲"])]},
 
  {"num":"🎬","name":"ローカル動画ai速報","env":"VIDEO","color":COL_VIDEO,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/search.rss?q=video+OR+animate+OR+Wan&restrict_sr=on&sort=new&limit=25",
@@ -200,7 +206,10 @@ TOPICS = [
      rss("https://zenn.dev/topics/comfyui/feed", include=VIDEO_TERMS + ["ComfyUI 動画", "ComfyUI video"]),
      # ★2026-09-15 削除: Zenn t/ai は幅が広すぎて動画無関係の記事が流入(Codex/Lean 4等)
      rss("https://huggingface.co/blog/feed.xml", include=VIDEO_TERMS + ["video generation", "text-to-video"]),
-     rss("https://export.arxiv.org/rss/cs.CV", include=VIDEO_TERMS + ["video generation", "text-to-video", "video diffusion"])]},
+     rss("https://export.arxiv.org/rss/cs.CV", include=VIDEO_TERMS + ["video generation", "text-to-video", "video diffusion"]),
+     # ★2026-09-16 盛々: Qiitaタグ追加
+     rss("https://qiita.com/tags/animatediff/feed", include=VIDEO_TERMS + ["動画", "video"]),
+     rss("https://qiita.com/tags/%E5%8B%95%E7%94%BB%E7%94%9F%E6%88%90/feed", include=VIDEO_TERMS + ["動画生成", "video"])]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/hot/.rss?limit=30", include=IMAGE_TERMS),
@@ -222,7 +231,13 @@ TOPICS = [
      rss("https://huggingface.co/blog/feed.xml", include=IMAGE_TERMS + ["diffusion"]),
      rss("https://export.arxiv.org/rss/cs.CV", include=IMAGE_TERMS),
      rss("https://github.com/comfyanonymous/ComfyUI/releases.atom", include=IMAGE_TERMS + ["support", "improve", "add"]),
-     rss("https://github.com/AUTOMATIC1111/stable-diffusion-webui/releases.atom", include=IMAGE_TERMS + ["support", "feature"])]},
+     rss("https://github.com/AUTOMATIC1111/stable-diffusion-webui/releases.atom", include=IMAGE_TERMS + ["support", "feature"]),
+     # ★2026-09-16 盛々: Qiita/Zenn 日本語ソース追加(実測fresh 3-4件・低頻度だが良質)
+     rss("https://qiita.com/tags/stablediffusion/feed", include=IMAGE_TERMS + ["画像"]),
+     rss("https://qiita.com/tags/comfyui/feed", include=IMAGE_TERMS + ["ComfyUI"]),
+     rss("https://zenn.dev/topics/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90/feed", include=IMAGE_TERMS + ["画像生成", "拡散"]),
+     rss("https://zenn.dev/topics/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/feed", include=IMAGE_TERMS + ["画像生成", "拡散"]),
+     rss("https://zenn.dev/topics/diffusion/feed", include=IMAGE_TERMS + ["拡散モデル", "diffusion"])]},
 
  {"num":"🔧","name":"ローカル学習・finetune速報","env":"FINETUNE","color":COL_FINETUNE,"sources":[
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=finetune+OR+LoRA+OR+DPO+OR+Unsloth&restrict_sr=on&sort=new&limit=25",
@@ -242,7 +257,12 @@ TOPICS = [
      rss("https://zenn.dev/topics/machinelearning/feed", include=FINETUNE_TERMS),
      rss("https://huggingface.co/blog/feed.xml", include=FINETUNE_TERMS + ["training", "fine-tune"]),
      rss("https://www.together.ai/blog/rss.xml", include=FINETUNE_TERMS),
-     rss("https://github.com/unslothai/unsloth/releases.atom", include=FINETUNE_TERMS + ["performance", "fix", "improve"])]},
+     rss("https://github.com/unslothai/unsloth/releases.atom", include=FINETUNE_TERMS + ["performance", "fix", "improve"]),
+     # ★2026-09-16 盛々: Qiita LoRAタグ(実測 fresh4/pass4・強い) + 機械学習/Zenn追加
+     rss("https://qiita.com/tags/lora/feed", include=FINETUNE_TERMS + ["LoRA", "学習"], exclude=FINETUNE_EXCLUDE),
+     rss("https://qiita.com/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/feed", include=FINETUNE_TERMS + ["ファインチューニング", "LoRA"]),
+     rss("https://zenn.dev/topics/qlora/feed", include=FINETUNE_TERMS + ["QLoRA", "LoRA"]),
+     rss("https://zenn.dev/topics/unsloth/feed", include=FINETUNE_TERMS + ["Unsloth"])]},
 ]
 
 def gn_url(q):
