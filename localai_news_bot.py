@@ -83,7 +83,11 @@ TTS_EXCLUDE = ["ElevenLabs subscription", "訴訟", "詐欺利用", "HR Path", "
                "TTSクーペ", "アウディ", "goo-net", "TTS Roadster",
                # ★2026-09-16 CDP実測ノイズ: クラウド音声クローン/研修動画/短尺広告
                "音声クローン", "AI音声クローン", "社内研修", "中小企業向け",
-               "生成AI活用術", "研修動画", "#Shorts", "自動生成する方法"]
+               "生成AI活用術", "研修動画", "#Shorts", "自動生成する方法",
+               # ★2026-09-16 -/+実測: 声優ライブイベント誤ヒット
+               "水瀬いのり", "inoriminase", "Inori Minase", "富士急", "OPEN AIR",
+               "OPEN AIR LIVE", "コニファーフォレスト", "オフィシャルフードパー",
+               "ライブ開催を記念して", "ライブ開催", "コラボ企画"]
 MUSIC_TERMS = ["MusicGen", "AudioCraft", "Stable Audio", "AudioLDM", "Riffusion", "Magenta music",
                "YuE music", "Levo music", "MusicLM", "音楽生成AI", "music generation",
                "text-to-music", "AI音楽", "AI作曲", "Suno open", "Jukebox model",
@@ -108,7 +112,14 @@ VIDEO_EXCLUDE = ["訴訟", "著作権訴訟", "映画スタジオ提訴", "Sora 
                  "AGI", "GPT-5", "GPT-6",
                  # ★2026-09-16 CDP実測ノイズ: クラウドText-to-Videoサービス広告
                  "Creatify", "Boreal", "Creatify Labs", "Text-to-Video AI モデル",
-                 "1セント", "40倍の速度", "unite.ai", "毎秒 1 セント"]
+                 "1セント", "40倍の速度", "unite.ai", "毎秒 1 セント",
+                 # ★2026-09-16 -/+実測残ノイズ: ファッション誌/大学/投資/ドリンク
+                 "CLASSY", "クラッシィ",
+                 "立教大学", "ビジネスデザイン研究所", "DX変革リーダー", "エッセンシャルズ",
+                 "オンライン動画学習", "gacco", "再開講",
+                 "香港上場", "株価上昇期待", "投資妙味", "マネーポストWEB", "田代尚機",
+                 "もちmochi", "Mochi_zukin", "Mochi+7", "Sakura-Mochi",
+                 "抹茶 ミルクティー", "キッチンカー", "スーチーパイ", "Vket"]
 # ★2026-09-15 実測: SANA=地名Sana'a/Sana Air Quality誤ヒット → 固有名詞化 "NVIDIA SANA"
 IMAGE_TERMS = ["Flux.1", "Flux dev", "Flux schnell", "SD3.5", "Stable Diffusion 3.5",
                "Stable Diffusion 3", "SDXL", "Kolors model", "Playground v2.5", "HiDream",
@@ -156,7 +167,7 @@ TOPICS = [
         include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=%22StyleTTS%22%20OR%20%22F5-TTS%22%20OR%20%22GPT-SoVITS%22%20OR%20%22VOICEVOX%22%20OR%20%22Fish%20Speech%22%20OR%20%22MetaVoice%22&hl=en-US&gl=US&ceid=US:en",
          include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('site:x.com "StyleTTS" OR "F5-TTS" OR "Zonos" OR "VOICEVOX" OR "GPT-SoVITS" OR "MetaVoice"',
+     gn('site:x.com "StyleTTS" OR "F5-TTS" OR "Zonos" OR "VOICEVOX" OR "GPT-SoVITS" OR "MetaVoice" -水瀬いのり -inoriminase -"Inori Minase" -富士急 -"OPEN AIR" -コラボ -声優 -"ライブ開催"',
         include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://zenn.dev/topics/tts/feed", include=TTS_TERMS),
      rss("https://zenn.dev/topics/voicevox/feed", include=TTS_TERMS + ["合成", "音声"]),
@@ -174,7 +185,7 @@ TOPICS = [
          include=MUSIC_TERMS),
      gn('MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion OR "text-to-music" OR "AI music generation" OR AudioBox',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"音楽生成AI" OR "自動作曲" OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -Suno -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ',
+     gn('"音楽生成AI" OR "自動作曲" OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -Suno -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ -桐生 -群馬 -埼玉 -参議院選挙 -"個人講演会" -"選挙4日目"',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=MusicGen%20OR%20%22Stable%20Audio%22%20OR%20AudioLDM%20OR%20Riffusion%20OR%20%22music%20generation%22&hl=en-US&gl=US&ceid=US:en",
          include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
@@ -195,11 +206,11 @@ TOPICS = [
          include=VIDEO_TERMS + ["ComfyUI"]),
      gn('"Wan 2.1" OR "LTX-Video" OR "CogVideoX" OR HunyuanVideo OR "Open-Sora" OR AnimateDiff OR "Stable Video Diffusion" OR "Mochi 1" OR "Pyramid Flow"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"動画生成AI" OR "AI動画生成" OR "動画生成モデル" -Creatify -Boreal -"Text-to-Video AI モデル" -"1セント" -"40倍の速度" -unite.ai -Codex -"投稿前予測" -"セキュリティ指摘" -入門講座 -"クーポン配布" -"Toramon" -"研修動画"',
+     gn('"動画生成AI" OR "AI動画生成" OR "動画生成モデル" -Creatify -Boreal -"Text-to-Video AI モデル" -"1セント" -"40倍の速度" -unite.ai -Codex -"投稿前予測" -"セキュリティ指摘" -入門講座 -"クーポン配布" -"Toramon" -"研修動画" -CLASSY -立教大学 -"gacco" -"エッセンシャルズ" -"オンライン動画学習" -"再開講" -"DX変革リーダー" -"ビジネスデザイン研究所" -"株価上昇" -"香港上場" -"投資妙味" -"田代尚機" -"マネーポストWEB"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=%22text%20to%20video%22%20OR%20%22image%20to%20video%22%20OR%20%22AnimateDiff%22%20OR%20%22Stable%20Video%22%20OR%20%22Wan%202%22%20OR%20%22CogVideoX%22&hl=en-US&gl=US&ceid=US:en",
          include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('site:x.com "Wan 2.1" OR "LTX-Video" OR "AnimateDiff" OR "CogVideoX" OR "HunyuanVideo" OR "Mochi"',
+     gn('site:x.com "Wan 2.1" OR "LTX-Video" OR "AnimateDiff" OR "CogVideoX" OR "HunyuanVideo" OR "Mochi 1" -もちmochi -Mochi_zukin -"Mochi+7" -抹茶 -ミルクティー -キャミソール -キッチンカー -Sakura-Mochi -スーチーパイ -Vket -サークル -"物理エンジン" -クッキー',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://zenn.dev/topics/animatediff/feed", include=VIDEO_TERMS),
      rss("https://zenn.dev/topics/wan/feed", include=VIDEO_TERMS),
@@ -248,7 +259,7 @@ TOPICS = [
         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=%22fine-tuning%20LLM%22%20OR%20%22QLoRA%22%20OR%20%22DPO%20training%22%20OR%20%22Unsloth%22%20OR%20%22axolotl%22%20OR%20%22LLaMA-Factory%22&hl=en-US&gl=US&ceid=US:en",
          include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('site:x.com "LoRA" OR "QLoRA" OR "DPO" OR "Unsloth" OR "axolotl" OR "fine-tuning"',
+     gn('site:x.com "QLoRA" OR "Unsloth" OR "axolotl" OR "LoRA学習" OR "LoRA training" OR "LoRA adapter" OR "fine-tuning LLM" OR "ファインチューニング" -VALORANT -"MATAGI SNIPERS" -eスポーツ -"flower mini" -キャミソール -トップス -"ONInoTE" -"Rulili" -"京Ⅱ" -"e-sports" -"新メンバー"',
         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://zenn.dev/topics/finetuning/feed", include=FINETUNE_TERMS),
      rss("https://zenn.dev/topics/lora/feed", include=FINETUNE_TERMS),
