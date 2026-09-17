@@ -87,7 +87,10 @@ TTS_EXCLUDE = ["ElevenLabs subscription", "訴訟", "詐欺利用", "HR Path", "
                # ★2026-09-16 -/+実測: 声優ライブイベント誤ヒット
                "水瀬いのり", "inoriminase", "Inori Minase", "富士急", "OPEN AIR",
                "OPEN AIR LIVE", "コニファーフォレスト", "オフィシャルフードパー",
-               "ライブ開催を記念して", "ライブ開催", "コラボ企画"]
+               "ライブ開催を記念して", "ライブ開催", "コラボ企画",
+               # ★2026-09-17 CDP実測ノイズ: エフェクター修理YouTube動画(BGMにVOICEVOX)
+               "エフェクター修理", "XOTIC", "AC PLUS", "音が途切れる",
+               "九州そら", "西田望見"]
 MUSIC_TERMS = ["MusicGen", "AudioCraft", "Stable Audio", "AudioLDM", "Riffusion", "Magenta music",
                "YuE music", "Levo music", "MusicLM", "音楽生成AI", "music generation",
                "text-to-music", "AI音楽", "AI作曲", "Suno open", "Jukebox model",
@@ -119,7 +122,11 @@ VIDEO_EXCLUDE = ["訴訟", "著作権訴訟", "映画スタジオ提訴", "Sora 
                  "オンライン動画学習", "gacco", "再開講",
                  "香港上場", "株価上昇期待", "投資妙味", "マネーポストWEB", "田代尚機",
                  "もちmochi", "Mochi_zukin", "Mochi+7", "Sakura-Mochi",
-                 "抹茶 ミルクティー", "キッチンカー", "スーチーパイ", "Vket"]
+                 "抹茶 ミルクティー", "キッチンカー", "スーチーパイ", "Vket",
+                 # ★2026-09-17 CDP実測ノイズ: 成人向けサービス紹介/BtoCサービス紹介
+                 "aimotion.jp", "aimotion", "成人向けAI動画", "成人向け",
+                 "ストーリースタジオ", "シリーズ制作", "value-press.com",
+                 "AZ8", "Koubo", "クリエイター支援を拡充"]
 # ★2026-09-15 実測: SANA=地名Sana'a/Sana Air Quality誤ヒット → 固有名詞化 "NVIDIA SANA"
 IMAGE_TERMS = ["Flux.1", "Flux dev", "Flux schnell", "SD3.5", "Stable Diffusion 3.5",
                "Stable Diffusion 3", "SDXL", "Kolors model", "Playground v2.5", "HiDream",
@@ -155,7 +162,9 @@ FINETUNE_EXCLUDE = ["株価", "資金調達", "Trial begins", "Mount Dora", "wes
                     "Lora A.", "Lora Cooley", "Lora Kelly", "Lora Jean",
                     # ★2026-09-16 CDP実測ノイズ: 動画配信ソフト/CloseBox系
                     "CloseBox", "動画対話システム", "配信用ソフト", "5090で使ったら",
-                    "MiniMax H3生成時間", "AI動画対話", "配信ソフトから"]
+                    "MiniMax H3生成時間", "AI動画対話", "配信ソフトから",
+                    # ★2026-09-17 CDP実測ノイズ: スクレイピング比較記事
+                    "BeautifulSoup", "Scraping AI", "保守税", "使い分けの境界線"]
 
 TOPICS = [
  {"num":"🗣️","name":"ローカルtts速報","env":"TTS","color":COL_TTS,"sources":[
@@ -163,7 +172,7 @@ TOPICS = [
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=TTS+OR+voice+cloning&restrict_sr=on&sort=new&limit=20", include=TTS_TERMS),
      gn('StyleTTS2 OR "F5-TTS" OR "Zonos-v" OR "Kokoro TTS" OR MetaVoice OR VoiceCraft OR "Coqui TTS" OR "Fish Speech" OR "GPT-SoVITS"',
         include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"音声合成AI" OR "VOICEVOX" OR "TTSモデル" OR StyleTTS2 OR "F5-TTS" OR "GPT-SoVITS" OR "Kokoro TTS" -研修動画 -"社内研修" -"中小企業向け" -"生成AI活用術" -"AI音声クローン" -"家族の声" -詐欺 -"家族なりすまし" -"ザ・モーニングショー" -ディープフェイク詐欺 -"AIラジオ制作所"',
+     gn('"音声合成AI" OR "VOICEVOX" OR "TTSモデル" OR StyleTTS2 OR "F5-TTS" OR "GPT-SoVITS" OR "Kokoro TTS" -研修動画 -"社内研修" -"中小企業向け" -"生成AI活用術" -"AI音声クローン" -"家族の声" -詐欺 -"家族なりすまし" -"ザ・モーニングショー" -ディープフェイク詐欺 -"AIラジオ制作所" -"エフェクター修理" -XOTIC -"AC PLUS" -"音が途切れる" -九州そら -西田望見',
         include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=%22StyleTTS%22%20OR%20%22F5-TTS%22%20OR%20%22GPT-SoVITS%22%20OR%20%22VOICEVOX%22%20OR%20%22Fish%20Speech%22%20OR%20%22MetaVoice%22&hl=en-US&gl=US&ceid=US:en",
          include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
@@ -206,7 +215,7 @@ TOPICS = [
          include=VIDEO_TERMS + ["ComfyUI"]),
      gn('"Wan 2.1" OR "LTX-Video" OR "CogVideoX" OR HunyuanVideo OR "Open-Sora" OR AnimateDiff OR "Stable Video Diffusion" OR "Mochi 1" OR "Pyramid Flow"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"動画生成AI" OR "AI動画生成" OR "動画生成モデル" -Creatify -Boreal -"Text-to-Video AI モデル" -"1セント" -"40倍の速度" -unite.ai -Codex -"投稿前予測" -"セキュリティ指摘" -入門講座 -"クーポン配布" -"Toramon" -"研修動画" -CLASSY -立教大学 -"gacco" -"エッセンシャルズ" -"オンライン動画学習" -"再開講" -"DX変革リーダー" -"ビジネスデザイン研究所" -"株価上昇" -"香港上場" -"投資妙味" -"田代尚機" -"マネーポストWEB"',
+     gn('"動画生成AI" OR "AI動画生成" OR "動画生成モデル" -Creatify -Boreal -"Text-to-Video AI モデル" -"1セント" -"40倍の速度" -unite.ai -Codex -"投稿前予測" -"セキュリティ指摘" -入門講座 -"クーポン配布" -"Toramon" -"研修動画" -CLASSY -立教大学 -"gacco" -"エッセンシャルズ" -"オンライン動画学習" -"再開講" -"DX変革リーダー" -"ビジネスデザイン研究所" -"株価上昇" -"香港上場" -"投資妙味" -"田代尚機" -"マネーポストWEB" -aimotion -"aimotion.jp" -"成人向けAI動画" -"成人向け" -"シリーズ制作" -"ストーリースタジオ" -AZ8 -Koubo -"クリエイター支援" -"value-press"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=%22text%20to%20video%22%20OR%20%22image%20to%20video%22%20OR%20%22AnimateDiff%22%20OR%20%22Stable%20Video%22%20OR%20%22Wan%202%22%20OR%20%22CogVideoX%22&hl=en-US&gl=US&ceid=US:en",
          include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
@@ -255,7 +264,7 @@ TOPICS = [
          include=FINETUNE_TERMS),
      gn('"LoRA training" OR "QLoRA" OR "DPO training" OR "Unsloth" OR "axolotl" OR "LLaMA-Factory" OR mlx-lm OR "ORPO" OR "SimPO" OR "DoRA finetune"',
         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"ファインチューニング" OR "LoRA学習" OR "QLoRA" OR "DPO学習" OR "継続事前学習" -LoRa通信 -LoRa無線 -LiDAR -介護施設 -RTH-25 -エフエージェイ -CloseBox -"配信用ソフト" -"動画対話" -"Motor Fan" -NDロードスター -オートエクゼ -"リビルトエンジン" -Cooley -Obituary -訃報 -"モデル学習家具" -くろがね',
+     gn('"ファインチューニング" OR "LoRA学習" OR "QLoRA" OR "DPO学習" OR "継続事前学習" -LoRa通信 -LoRa無線 -LiDAR -介護施設 -RTH-25 -エフエージェイ -CloseBox -"配信用ソフト" -"動画対話" -"Motor Fan" -NDロードスター -オートエクゼ -"リビルトエンジン" -Cooley -Obituary -訃報 -"モデル学習家具" -くろがね -BeautifulSoup -"Scraping AI" -"保守税" -"使い分けの境界線"',
         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=%22fine-tuning%20LLM%22%20OR%20%22QLoRA%22%20OR%20%22DPO%20training%22%20OR%20%22Unsloth%22%20OR%20%22axolotl%22%20OR%20%22LLaMA-Factory%22&hl=en-US&gl=US&ceid=US:en",
          include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
