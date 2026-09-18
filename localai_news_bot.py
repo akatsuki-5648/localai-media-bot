@@ -109,7 +109,11 @@ MUSIC_EXCLUDE = ["Spotify Wrapped", "Apple Music プラン", "配信サービス
                  "Mantan Web", "elle.com", "GALLERIA", "TGS2026", "TGSブース",
                  "yueさん", "elleファッション",
                  # ★2026-09-18 v5: Gemini Live audio (LLM系・音楽ではない)
-                 "ジェミニライブオーディオ", "Gemini Live"]
+                 "ジェミニライブオーディオ", "Gemini Live",
+                 # ★2026-09-19 v6 CDP実測新ノイズ: 「Yue」イラストレーター作品集/ペット散歩BGM
+                 "YUE作品集", "YuE作品集", "Yue作品集", "瑞花", "予約開始", "作品集』",
+                 "ちょめ散歩", "chomesampo", "わさお一家", "ちょめ", "散歩を連日公開",
+                 "Woodwind", "本日のBGMは"]
 # ★2026-09-18: -Suno 削除(★致命的だった: SunoはNo.1音楽AI・除外してはいけない)
 VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "Wan 2.2", "Wan2.2", "LTX-Video", "LTX Video", "Mochi 1", "CogVideoX", "HunyuanVideo",
                "Pyramid Flow", "Open-Sora", "AnimateDiff", "Stable Video Diffusion", "SVD",
@@ -219,7 +223,7 @@ TOPICS = [
      # ★2026-09-18 盛々: Suno/Udio/YuE の主要製品名を拾えるように追加
      gn('Suno OR Udio OR YuE OR DiffRhythm OR "ACE-Step" OR Mureka OR "AI music model" OR "text-to-song"',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"音楽生成AI" OR "自動作曲" OR Suno OR Udio OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ -桐生 -群馬 -埼玉 -参議院選挙 -"個人講演会" -"選挙4日目" -フェティコ -FETICO -ランジェリー -アウター -GALLERIA -TGS2026 -"Mantan Web" -"elle.com" -"ジェミニライブ" -"Gemini Live"',
+     gn('"音楽生成AI" OR "自動作曲" OR Suno OR Udio OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ -桐生 -群馬 -埼玉 -参議院選挙 -"個人講演会" -"選挙4日目" -フェティコ -FETICO -ランジェリー -アウター -GALLERIA -TGS2026 -"Mantan Web" -"elle.com" -"ジェミニライブ" -"Gemini Live" -"作品集" -予約開始 -瑞花 -"ちょめ散歩" -chomesampo -わさお一家 -Woodwind -BGM',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=MusicGen%20OR%20%22Stable%20Audio%22%20OR%20AudioLDM%20OR%20Riffusion%20OR%20%22music%20generation%22&hl=en-US&gl=US&ceid=US:en",
          include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
@@ -235,7 +239,11 @@ TOPICS = [
      # ★2026-09-18 v5: MUSICはGitHub Releases使えない(Suno/Udio独自PF)。中途半端削除・専門Redditと MarkTechPost だけ
      rss("https://www.reddit.com/r/suno/hot/.rss?limit=25", include=MUSIC_TERMS + ["Suno", "music", "song"], exclude=MUSIC_EXCLUDE),
      rss("https://www.reddit.com/r/udiomusic/hot/.rss?limit=15", include=MUSIC_TERMS + ["Udio", "music"], exclude=MUSIC_EXCLUDE),
-     rss("https://www.marktechpost.com/feed/", include=MUSIC_TERMS + ["music", "audio"])]},
+     rss("https://www.marktechpost.com/feed/", include=MUSIC_TERMS + ["music", "audio"]),
+     # ★2026-09-19 v6 大量追加: rss_massive実測でfresh確認
+     rss("https://www.reddit.com/r/AImusic/new/.rss?limit=30", include=MUSIC_TERMS + ["Suno", "Udio", "music", "song"], exclude=MUSIC_EXCLUDE),  # ★30/24h
+     rss("https://news.google.com/rss/search?q=%22Suno+V6%22+OR+%22Suno+v5%22+OR+%22Udio%22+OR+%22YuE2%22&hl=ja&gl=JP&ceid=JP:ja",
+         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
 
  {"num":"🎬","name":"ローカル動画ai速報","env":"VIDEO","color":COL_VIDEO,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/search.rss?q=video+OR+animate+OR+Wan&restrict_sr=on&sort=new&limit=25",
@@ -273,7 +281,10 @@ TOPICS = [
      rss("https://github.com/Tencent-Hunyuan/HunyuanVideo/releases.atom", include=VIDEO_TERMS + ["HunyuanVideo", "release"]),
      rss("https://github.com/Lightricks/LTX-Video/releases.atom", include=VIDEO_TERMS + ["LTX-Video", "release"]),
      rss("https://github.com/hpcaitech/Open-Sora/releases.atom", include=VIDEO_TERMS + ["Open-Sora", "release"]),
-     rss("https://github.com/THUDM/CogVideo/releases.atom", include=VIDEO_TERMS + ["CogVideoX", "release"])]},
+     rss("https://github.com/THUDM/CogVideo/releases.atom", include=VIDEO_TERMS + ["CogVideoX", "release"]),
+     # ★2026-09-19 v6: 商用トップ製品GN検索(★168h=17件)
+     rss("https://news.google.com/rss/search?q=%22Runway+Gen%22+OR+%22Kling+AI%22+OR+%22Sora+2%22+OR+%22Luma%22&hl=en-US&gl=US&ceid=US:en",
+         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/hot/.rss?limit=30", include=IMAGE_TERMS),
@@ -311,7 +322,10 @@ TOPICS = [
      rss("https://www.reddit.com/r/midjourney/hot/.rss?limit=25", include=IMAGE_TERMS + ["Midjourney", "image"], exclude=IMAGE_EXCLUDE),
      rss("https://www.marktechpost.com/feed/", include=IMAGE_TERMS + ["image generation", "diffusion"]),
      # ★GitHub Releases 実測で 168h fresh 2件確認済み(ComfyUI)
-     rss("https://github.com/NVlabs/Sana/releases.atom", include=IMAGE_TERMS + ["Sana", "release"])]},
+     rss("https://github.com/NVlabs/Sana/releases.atom", include=IMAGE_TERMS + ["Sana", "release"]),
+     # ★2026-09-19 v6: 商用トップ製品GN検索(★168h=4件)
+     rss("https://news.google.com/rss/search?q=%22Nano+Banana%22+OR+%22Ideogram+3%22+OR+%22Recraft+V3%22+OR+%22Midjourney+V7%22&hl=en-US&gl=US&ceid=US:en",
+         include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
 
  {"num":"🔧","name":"ローカル学習・finetune速報","env":"FINETUNE","color":COL_FINETUNE,"sources":[
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=finetune+OR+LoRA+OR+DPO+OR+Unsloth&restrict_sr=on&sort=new&limit=25",
@@ -340,7 +354,10 @@ TOPICS = [
      # ★2026-09-18 v5: 中途半端追加を削除、実測で fresh 確認できたものだけ
      rss("https://www.marktechpost.com/feed/", include=FINETUNE_TERMS + ["fine-tuning", "LoRA", "training"]),
      # ★unsloth releases 168h fresh 2件・24h 1件確認済み
-     rss("https://github.com/unslothai/unsloth/releases.atom", include=FINETUNE_TERMS + ["Unsloth", "improve"])]},
+     rss("https://github.com/unslothai/unsloth/releases.atom", include=FINETUNE_TERMS + ["Unsloth", "improve"]),
+     # ★2026-09-19 v6: GN fine-tuning検索(★168h=9件)
+     rss("https://news.google.com/rss/search?q=%22fine-tuning%22+OR+%22LoRA+training%22+OR+%22QLoRA%22+OR+%22Unsloth%22&hl=en-US&gl=US&ceid=US:en",
+         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
 ]
 
 def gn_url(q):
