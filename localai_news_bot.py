@@ -103,7 +103,13 @@ MUSIC_EXCLUDE = ["Spotify Wrapped", "Apple Music プラン", "配信サービス
                  # ★2026-09-16 CDP実測ノイズ: 著名人インタビュー
                  "さだまさし", "AI作曲どう見る", "MEDIAMIXI",
                  "AI学習にYouTube", "音声データ取得認める", "作曲家インタビュー",
-                 "アーティストインタビュー", "配信認める"]
+                 "アーティストインタビュー", "配信認める",
+                 # ★2026-09-18 v5 CDP実測ノイズ: 「Yue」ファッションブランド衝突(YuE音楽AIモデル名と誤ヒット)
+                 "フェティコ", "FETICO", "ランジェリー", "アウター", "コラボレーション第",
+                 "Mantan Web", "elle.com", "GALLERIA", "TGS2026", "TGSブース",
+                 "yueさん", "elleファッション",
+                 # ★2026-09-18 v5: Gemini Live audio (LLM系・音楽ではない)
+                 "ジェミニライブオーディオ", "Gemini Live"]
 # ★2026-09-18: -Suno 削除(★致命的だった: SunoはNo.1音楽AI・除外してはいけない)
 VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "Wan 2.2", "Wan2.2", "LTX-Video", "LTX Video", "Mochi 1", "CogVideoX", "HunyuanVideo",
                "Pyramid Flow", "Open-Sora", "AnimateDiff", "Stable Video Diffusion", "SVD",
@@ -213,7 +219,7 @@ TOPICS = [
      # ★2026-09-18 盛々: Suno/Udio/YuE の主要製品名を拾えるように追加
      gn('Suno OR Udio OR YuE OR DiffRhythm OR "ACE-Step" OR Mureka OR "AI music model" OR "text-to-song"',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"音楽生成AI" OR "自動作曲" OR Suno OR Udio OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ -桐生 -群馬 -埼玉 -参議院選挙 -"個人講演会" -"選挙4日目"',
+     gn('"音楽生成AI" OR "自動作曲" OR Suno OR Udio OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ -桐生 -群馬 -埼玉 -参議院選挙 -"個人講演会" -"選挙4日目" -フェティコ -FETICO -ランジェリー -アウター -GALLERIA -TGS2026 -"Mantan Web" -"elle.com" -"ジェミニライブ" -"Gemini Live"',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=MusicGen%20OR%20%22Stable%20Audio%22%20OR%20AudioLDM%20OR%20Riffusion%20OR%20%22music%20generation%22&hl=en-US&gl=US&ceid=US:en",
          include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
