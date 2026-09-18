@@ -94,10 +94,10 @@ TTS_EXCLUDE = ["ElevenLabs subscription", "訴訟", "詐欺利用", "HR Path", "
 MUSIC_TERMS = ["MusicGen", "AudioCraft", "Stable Audio", "AudioLDM", "Riffusion", "Magenta music",
                "YuE", "YuE music", "Levo music", "MusicLM", "音楽生成AI", "music generation",
                "text-to-music", "AI音楽", "AI作曲", "Suno", "Suno v4", "Suno v5", "Suno AI",
-               "Udio", "Udio music", "DiffRhythm", "ACE-Step", "Jukebox model",
+               "^Udio", "^Udio music", "DiffRhythm", "ACE-Step", "Jukebox model",
                "MusicLDM", "MusicHiFi", "AudioBox", "自動作曲", "音楽AI生成",
                # ★2026-09-18 盛々: Hikârư指摘「音楽AIは毎日出まくってる」→ 主要製品名を拾えるように
-               "Mureka", "Suno v", "Udio v", "Anticipatory Music"]
+               "Mureka", "Suno v", "^Udio v", "Anticipatory Music"]
 MUSIC_EXCLUDE = ["Spotify Wrapped", "Apple Music プラン", "配信サービス開始", "ライブ配信", "訴訟",
                  "音楽業界", "レコード会社", "コンサート",
                  # ★2026-09-16 CDP実測ノイズ: 著名人インタビュー
@@ -123,7 +123,7 @@ VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "Wan 2.2", "Wan2.2", "LTX-Video", "LTX Video
                # ★2026-09-18 盛々: Hikârư指摘「動画AIは毎日出まくってる」→ 主要製品名を拾えるように
                "Kling", "Kling 2", "Kling AI", "Runway Gen-3", "Runway Gen-4", "Runway Aleph",
                "Sora 2", "Sora AI", "Luma Dream Machine", "Luma Ray", "Pika 2", "Pika Labs",
-               "Vidu", "Hailuo", "MiniMax video", "Seaweed", "Tencent Video",
+               "^Vidu", "Hailuo", "MiniMax video", "Seaweed", "Tencent Video",
                "HunyuanVideo-I2V", "SkyReels", "FLUX.1 Video", "Veo 3"]
 VIDEO_EXCLUDE = ["訴訟", "著作権訴訟", "映画スタジオ提訴", "Sora subscription", "配信サービス",
                  "俳優", "映画館", "興行収入",
@@ -189,6 +189,22 @@ FINETUNE_EXCLUDE = ["株価", "資金調達", "Trial begins", "Mount Dora", "wes
                     # ★2026-09-17 CDP実測ノイズ: スクレイピング比較記事
                     "BeautifulSoup", "Scraping AI", "保守税", "使い分けの境界線"]
 
+# ★2026-09-19 v7: 激裏(自分/ニュース・情報源 取得ルート.md PART3/112/115/121/122)由来ソース専用の【強い】絞り込み。
+#   arXivは題名に語がある論文だけ通す。"^"は語頭が単語の境界のときだけ当てる
+#   (実測: LoRA⊂exp-LORA-tion / TTS⊂TTSR / Vidu⊂individual / Udio⊂audio が途中一致で無関係な論文を大量に通していた)。
+FINETUNE_STRICT = [t for t in FINETUNE_TERMS if t not in ("distillation", "蒸留学習", "synthetic data", "データ合成", "fine-tuning")]
+ARXIV_LLMISH = ["LLM", "language model", "large language", "Llama", "Qwen", "Mistral", "Gemma", "DeepSeek"]
+ARXIV_TITLE_EXCLUDE = LOCAL_TITLE_EXCLUDE + ["cancer", "clinical", "medical", "patient", "diagnos", "radiolog", "pathology",
+                                             "federated", "wireless", "vehicle", "tomography"]
+TTS_TITLE = ["text-to-speech", "^TTS ", "^TTS-", "speech synthesis", "voice cloning", "voice conversion", "speech generation",
+             "zero-shot speech", "speech codec", "neural codec"]
+MUSIC_TITLE = ["music", "^song", "singing", "^MIDI", "musical"]
+VIDEO_TITLE = ["video generation", "text-to-video", "image-to-video", "video diffusion", "video synthesis",
+               "video editing", "talking head", "video foundation"]
+IMAGE_TITLE = ["text-to-image", "image generation", "image editing", "image synthesis", "^T2I", "ControlNet"]
+FT_TITLE = ["fine-tun", "finetun", "^LoRA", "QLoRA", "^PEFT", "parameter-efficient", "instruction tuning", "^SFT", "^DPO",
+            "RLHF", "preference optimization"]
+
 TOPICS = [
  {"num":"🗣️","name":"ローカルtts速報","env":"TTS","color":COL_TTS,"sources":[
      rss("https://www.reddit.com/r/AIVoicing/hot/.rss?limit=15", include=TTS_TERMS),
@@ -212,7 +228,13 @@ TOPICS = [
      rss("https://qiita.com/tags/%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90/feed", include=TTS_TERMS + ["音声合成", "TTS"]),
      # ★2026-09-18 v5: 中途半端追加を削除、実測で fresh 確認できた MarkTechPost + VOICEVOX releases だけ残す
      rss("https://www.marktechpost.com/feed/", include=TTS_TERMS + ["TTS", "voice", "text-to-speech"]),
-     rss("https://github.com/VOICEVOX/voicevox/releases.atom", include=TTS_TERMS + ["VOICEVOX", "音声"])]},
+     rss("https://github.com/VOICEVOX/voicevox/releases.atom", include=TTS_TERMS + ["VOICEVOX", "音声"]),
+     # ★2026-09-19 v7 激裏由来(PART112/122): 題名に text-to-speech/speech synthesis 等がある論文 + JP媒体は TTS_TERMS の固有名詞だけ
+     rss("https://pc.watch.impress.co.jp/data/rss/1.0/pcw/feed.rdf", include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://gigazine.net/news/rss_2.0/", include=TTS_TERMS, exclude=TTS_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.CL", label="arXiv cs.CL", title_include=TTS_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.LG", label="arXiv cs.LG", title_include=TTS_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.AI", label="arXiv cs.AI", title_include=TTS_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE)]},
 
  {"num":"🎵","name":"ローカル音楽ai速報","env":"MUSIC","color":COL_MUSIC,"sources":[
      rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=15", include=MUSIC_TERMS),
@@ -243,7 +265,14 @@ TOPICS = [
      # ★2026-09-19 v6 大量追加: rss_massive実測でfresh確認
      rss("https://www.reddit.com/r/AImusic/new/.rss?limit=30", include=MUSIC_TERMS + ["Suno", "Udio", "music", "song"], exclude=MUSIC_EXCLUDE),  # ★30/24h
      rss("https://news.google.com/rss/search?q=%22Suno+V6%22+OR+%22Suno+v5%22+OR+%22Udio%22+OR+%22YuE2%22&hl=ja&gl=JP&ceid=JP:ja",
-         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
+         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     # ★2026-09-19 v7 激裏由来(PART23/112/113/122): JP媒体は MUSIC_TERMS の固有名詞だけ / arXivは題名に music 等がある論文だけ(音楽推薦は除外)
+     rss("https://natalie.mu/music/feed/news", include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://pc.watch.impress.co.jp/data/rss/1.0/pcw/feed.rdf", include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://gigazine.net/news/rss_2.0/", include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.CL", label="arXiv cs.CL", title_include=MUSIC_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE + ["recommend"]),
+     rss("https://export.arxiv.org/rss/cs.LG", label="arXiv cs.LG", title_include=MUSIC_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE + ["recommend"]),
+     rss("https://export.arxiv.org/rss/cs.AI", label="arXiv cs.AI", title_include=MUSIC_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE + ["recommend"])]},
 
  {"num":"🎬","name":"ローカル動画ai速報","env":"VIDEO","color":COL_VIDEO,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/search.rss?q=video+OR+animate+OR+Wan&restrict_sr=on&sort=new&limit=25",
@@ -284,7 +313,15 @@ TOPICS = [
      rss("https://github.com/THUDM/CogVideo/releases.atom", include=VIDEO_TERMS + ["CogVideoX", "release"]),
      # ★2026-09-19 v6: 商用トップ製品GN検索(★168h=17件)
      rss("https://news.google.com/rss/search?q=%22Runway+Gen%22+OR+%22Kling+AI%22+OR+%22Sora+2%22+OR+%22Luma%22&hl=en-US&gl=US&ceid=US:en",
-         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
+         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     # ★2026-09-19 v7 激裏由来(PART112/122): JP媒体は VIDEO_TERMS の固有名詞だけ / arXivは題名に video generation 等がある論文だけ
+     #   (world model / video model 単独はロボット・エージェント論文が混ざるので使わない)
+     rss("https://av.watch.impress.co.jp/data/rss/1.0/avw/feed.rdf", include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://pc.watch.impress.co.jp/data/rss/1.0/pcw/feed.rdf", include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://gigazine.net/news/rss_2.0/", include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.CL", label="arXiv cs.CL", title_include=VIDEO_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.LG", label="arXiv cs.LG", title_include=VIDEO_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.AI", label="arXiv cs.AI", title_include=VIDEO_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE)]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/hot/.rss?limit=30", include=IMAGE_TERMS),
@@ -325,7 +362,14 @@ TOPICS = [
      rss("https://github.com/NVlabs/Sana/releases.atom", include=IMAGE_TERMS + ["Sana", "release"]),
      # ★2026-09-19 v6: 商用トップ製品GN検索(★168h=4件)
      rss("https://news.google.com/rss/search?q=%22Nano+Banana%22+OR+%22Ideogram+3%22+OR+%22Recraft+V3%22+OR+%22Midjourney+V7%22&hl=en-US&gl=US&ceid=US:en",
-         include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
+         include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     # ★2026-09-19 v7 激裏由来(PART112/122): JP媒体は IMAGE_TERMS の固有名詞だけ / arXivは題名に text-to-image 等がある論文だけ
+     #   (diffusion model / personaliz 単独は光学トモグラフィー・連合学習が混ざるので使わない)
+     rss("https://pc.watch.impress.co.jp/data/rss/1.0/pcw/feed.rdf", include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://gigazine.net/news/rss_2.0/", include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.CL", label="arXiv cs.CL", title_include=IMAGE_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.LG", label="arXiv cs.LG", title_include=IMAGE_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.AI", label="arXiv cs.AI", title_include=IMAGE_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE)]},
 
  {"num":"🔧","name":"ローカル学習・finetune速報","env":"FINETUNE","color":COL_FINETUNE,"sources":[
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=finetune+OR+LoRA+OR+DPO+OR+Unsloth&restrict_sr=on&sort=new&limit=25",
@@ -357,7 +401,17 @@ TOPICS = [
      rss("https://github.com/unslothai/unsloth/releases.atom", include=FINETUNE_TERMS + ["Unsloth", "improve"]),
      # ★2026-09-19 v6: GN fine-tuning検索(★168h=9件)
      rss("https://news.google.com/rss/search?q=%22fine-tuning%22+OR+%22LoRA+training%22+OR+%22QLoRA%22+OR+%22Unsloth%22&hl=en-US&gl=US&ceid=US:en",
-         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE)]},
+         include=FINETUNE_TERMS, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     # ★2026-09-19 v7 激裏由来(PART3/112/115/122): 開発者媒体は FINETUNE_STRICT(一般語 distillation/synthetic data を除いた版) /
+     #   arXivは題名に fine-tuning/LoRA/DPO 等があり、かつ本文がLLMの論文だけ
+     rss("https://www.publickey1.jp/atom.xml", include=FINETUNE_STRICT, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://codezine.jp/rss/new/20/index.xml", include=FINETUNE_STRICT, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://gigazine.net/news/rss_2.0/", include=FINETUNE_STRICT, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://lobste.rs/rss", include=FINETUNE_STRICT, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://hnrss.org/frontpage", include=FINETUNE_STRICT, exclude=FINETUNE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.CL", label="arXiv cs.CL", include=ARXIV_LLMISH, title_include=FT_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.LG", label="arXiv cs.LG", include=ARXIV_LLMISH, title_include=FT_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE),
+     rss("https://export.arxiv.org/rss/cs.AI", label="arXiv cs.AI", include=ARXIV_LLMISH, title_include=FT_TITLE, title_exclude=ARXIV_TITLE_EXCLUDE)]},
 ]
 
 def gn_url(q):
@@ -386,6 +440,11 @@ def contains_any(text, terms):
         needle = str(term).lower()
         if not needle:
             continue
+        # 先頭"^"の語は語頭が単語の境界のときだけ当てる(Vidu⊂individual / Udio⊂audio の途中一致で論文が大量混入していた)
+        if needle.startswith("^"):
+            if re.search(r"(?<![a-z0-9])" + re.escape(needle[1:]), low):
+                return True
+            continue
         if len(needle) <= 2 and needle.isascii() and needle.isalnum():
             if re.search(rf"(?<![a-z0-9]){re.escape(needle)}(?![a-z0-9])", low):
                 return True
@@ -399,7 +458,7 @@ def is_release_version_noise(title):
     low = t.lower()
     if any(x.lower() in low for x in MODEL_RELEASE_TERMS + ["codex", "claude", "gemini", "grok", "llama", "qwen", "deepseek"]):
         return False
-    return bool(re.fullmatch(r"v?\d+(\.\d+){1,4}([._-]?(alpha|beta|rc)\.?\d*)?", low) or low in {"stable", "nightly"})
+    return bool(re.fullmatch(r"([a-z]+-)?v?\d+(\.\d+){1,4}([._-]?(alpha|beta|rc)[.\d]*)?|b\d{3,6}", low) or low in {"stable", "nightly"})
 
 def canonical_title(title):
     t = re.sub(r"\s+-\s+[^|]+(?:\s+\|.*)?$", "", title or "")
