@@ -92,20 +92,29 @@ TTS_EXCLUDE = ["ElevenLabs subscription", "訴訟", "詐欺利用", "HR Path", "
                "エフェクター修理", "XOTIC", "AC PLUS", "音が途切れる",
                "九州そら", "西田望見"]
 MUSIC_TERMS = ["MusicGen", "AudioCraft", "Stable Audio", "AudioLDM", "Riffusion", "Magenta music",
-               "YuE music", "Levo music", "MusicLM", "音楽生成AI", "music generation",
-               "text-to-music", "AI音楽", "AI作曲", "Suno open", "Jukebox model",
-               "MusicLDM", "MusicHiFi", "AudioBox", "自動作曲", "音楽AI生成"]
+               "YuE", "YuE music", "Levo music", "MusicLM", "音楽生成AI", "music generation",
+               "text-to-music", "AI音楽", "AI作曲", "Suno", "Suno v4", "Suno v5", "Suno AI",
+               "Udio", "Udio music", "DiffRhythm", "ACE-Step", "Jukebox model",
+               "MusicLDM", "MusicHiFi", "AudioBox", "自動作曲", "音楽AI生成",
+               # ★2026-09-18 盛々: Hikârư指摘「音楽AIは毎日出まくってる」→ 主要製品名を拾えるように
+               "Mureka", "Suno v", "Udio v", "Anticipatory Music"]
 MUSIC_EXCLUDE = ["Spotify Wrapped", "Apple Music プラン", "配信サービス開始", "ライブ配信", "訴訟",
                  "音楽業界", "レコード会社", "コンサート",
-                 # ★2026-09-16 CDP実測ノイズ: 著名人インタビュー/クラウドSuno
-                 "さだまさし", "AI作曲どう見る", "Suno", "MEDIAMIXI",
+                 # ★2026-09-16 CDP実測ノイズ: 著名人インタビュー
+                 "さだまさし", "AI作曲どう見る", "MEDIAMIXI",
                  "AI学習にYouTube", "音声データ取得認める", "作曲家インタビュー",
                  "アーティストインタビュー", "配信認める"]
-VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "LTX-Video", "LTX Video", "Mochi 1", "CogVideoX", "HunyuanVideo",
+# ★2026-09-18: -Suno 削除(★致命的だった: SunoはNo.1音楽AI・除外してはいけない)
+VIDEO_TERMS = ["Wan2.1", "Wan 2.1", "Wan 2.2", "Wan2.2", "LTX-Video", "LTX Video", "Mochi 1", "CogVideoX", "HunyuanVideo",
                "Pyramid Flow", "Open-Sora", "AnimateDiff", "Stable Video Diffusion", "SVD",
                "EasyAnimate", "VideoCrafter", "VGen video", "動画生成AI", "text-to-video",
                "image-to-video", "AI動画生成", "video generation", "Genmo", "Rhymes Allegro",
-               "CausVid", "LivePortrait", "MuseTalk"]
+               "CausVid", "LivePortrait", "MuseTalk",
+               # ★2026-09-18 盛々: Hikârư指摘「動画AIは毎日出まくってる」→ 主要製品名を拾えるように
+               "Kling", "Kling 2", "Kling AI", "Runway Gen-3", "Runway Gen-4", "Runway Aleph",
+               "Sora 2", "Sora AI", "Luma Dream Machine", "Luma Ray", "Pika 2", "Pika Labs",
+               "Vidu", "Hailuo", "MiniMax video", "Seaweed", "Tencent Video",
+               "HunyuanVideo-I2V", "SkyReels", "FLUX.1 Video", "Veo 3"]
 VIDEO_EXCLUDE = ["訴訟", "著作権訴訟", "映画スタジオ提訴", "Sora subscription", "配信サービス",
                  "俳優", "映画館", "興行収入",
                  # ★2026-09-15 実測ノイズ: 数学論文/Codex/AI一般が誤ヒット
@@ -128,11 +137,15 @@ VIDEO_EXCLUDE = ["訴訟", "著作権訴訟", "映画スタジオ提訴", "Sora 
                  "ストーリースタジオ", "シリーズ制作", "value-press.com",
                  "AZ8", "Koubo", "クリエイター支援を拡充"]
 # ★2026-09-15 実測: SANA=地名Sana'a/Sana Air Quality誤ヒット → 固有名詞化 "NVIDIA SANA"
-IMAGE_TERMS = ["Flux.1", "Flux dev", "Flux schnell", "SD3.5", "Stable Diffusion 3.5",
+IMAGE_TERMS = ["Flux.1", "Flux dev", "Flux schnell", "Flux Pro", "Flux Krea", "SD3.5", "Stable Diffusion 3.5",
                "Stable Diffusion 3", "SDXL", "Kolors model", "Playground v2.5", "HiDream",
-               "NVIDIA SANA", "SANA text-to-image", "ComfyUI", "A1111", "Automatic1111",
+               "HiDream I1", "NVIDIA SANA", "SANA text-to-image", "ComfyUI", "A1111", "Automatic1111",
                "Forge WebUI", "SwarmUI", "Fooocus", "InvokeAI", "ControlNet", "IPAdapter",
-               "civitai", "AI画像生成", "画像生成AI"]
+               "civitai", "AI画像生成", "画像生成AI",
+               # ★2026-09-18 盛々: Hikârư指摘「画像AIは毎日出まくってる」→ 主要新製品を拾えるように
+               "Nano Banana", "Gemini Image", "Ideogram 3", "Ideogram v3", "Recraft V3", "Recraft AI",
+               "Midjourney V7", "Midjourney V6.1", "Chroma model", "Qwen-Image", "Wan Image",
+               "Nano-Banana"]
 IMAGE_EXCLUDE = ["訴訟", "著作権訴訟", "ランウェイ", "ファッションブランド", "Marc Jacobs",
                  "コレクション", "ホロライブ", "ときのそら", "ミニスカ", "グラビア", "配信者",
                  "Yemeni", "Air Quality", "Pristine Healthcare",
@@ -194,11 +207,14 @@ TOPICS = [
          include=MUSIC_TERMS),
      gn('MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion OR "text-to-music" OR "AI music generation" OR AudioBox',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('"音楽生成AI" OR "自動作曲" OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -Suno -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ -桐生 -群馬 -埼玉 -参議院選挙 -"個人講演会" -"選挙4日目"',
+     # ★2026-09-18 盛々: Suno/Udio/YuE の主要製品名を拾えるように追加
+     gn('Suno OR Udio OR YuE OR DiffRhythm OR "ACE-Step" OR Mureka OR "AI music model" OR "text-to-song"',
+        include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     gn('"音楽生成AI" OR "自動作曲" OR Suno OR Udio OR MusicGen OR "Stable Audio" OR AudioLDM OR Riffusion -さだまさし -"AI作曲どう見る" -"どう見る" -インタビュー -MEDIAMIXI -"配信認める" -音楽業界 -TuneCore -"著作権侵害" -SOCAN -KAI-YOU -TradingView -Investing.com -UMG -ElevenLabs -イレブンラボ -桐生 -群馬 -埼玉 -参議院選挙 -"個人講演会" -"選挙4日目"',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://news.google.com/rss/search?q=MusicGen%20OR%20%22Stable%20Audio%22%20OR%20AudioLDM%20OR%20Riffusion%20OR%20%22music%20generation%22&hl=en-US&gl=US&ceid=US:en",
          include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
-     gn('site:x.com "MusicGen" OR "Stable Audio" OR "AudioLDM" OR "Riffusion" OR "AudioBox"',
+     gn('site:x.com Suno OR Udio OR YuE OR DiffRhythm OR "ACE-Step" OR MusicGen OR "Stable Audio"',
         include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      rss("https://zenn.dev/topics/musicgen/feed", include=MUSIC_TERMS),
      rss("https://zenn.dev/topics/ai/feed", include=MUSIC_TERMS + ["音楽", "作曲"]),
@@ -213,7 +229,12 @@ TOPICS = [
          include=VIDEO_TERMS),
      rss("https://www.reddit.com/r/comfyui/search.rss?q=video+OR+animate&restrict_sr=on&sort=new&limit=15",
          include=VIDEO_TERMS + ["ComfyUI"]),
-     gn('"Wan 2.1" OR "LTX-Video" OR "CogVideoX" OR HunyuanVideo OR "Open-Sora" OR AnimateDiff OR "Stable Video Diffusion" OR "Mochi 1" OR "Pyramid Flow"',
+     gn('"Wan 2.1" OR "Wan 2.2" OR "LTX-Video" OR "CogVideoX" OR HunyuanVideo OR "Open-Sora" OR AnimateDiff OR "Stable Video Diffusion" OR "Mochi 1" OR "Pyramid Flow"',
+        include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     # ★2026-09-18 盛々: 商用トップ製品の速報(Kling/Runway/Sora/Luma/Pika/Vidu等)
+     gn('Kling OR "Runway Gen-3" OR "Runway Gen-4" OR "Sora AI" OR "Luma Dream Machine" OR Pika OR Vidu OR Hailuo OR "MiniMax video"',
+        include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     gn('"Kling AI" OR "Kling 2" OR "Runway Aleph" OR "Sora 2" OR "Luma Ray" OR "Veo 3" OR SkyReels OR "HunyuanVideo-I2V"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      gn('"動画生成AI" OR "AI動画生成" OR "動画生成モデル" -Creatify -Boreal -"Text-to-Video AI モデル" -"1セント" -"40倍の速度" -unite.ai -Codex -"投稿前予測" -"セキュリティ指摘" -入門講座 -"クーポン配布" -"Toramon" -"研修動画" -CLASSY -立教大学 -"gacco" -"エッセンシャルズ" -"オンライン動画学習" -"再開講" -"DX変革リーダー" -"ビジネスデザイン研究所" -"株価上昇" -"香港上場" -"投資妙味" -"田代尚機" -"マネーポストWEB" -aimotion -"aimotion.jp" -"成人向けAI動画" -"成人向け" -"シリーズ制作" -"ストーリースタジオ" -AZ8 -Koubo -"クリエイター支援" -"value-press"',
         include=VIDEO_TERMS, exclude=VIDEO_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
@@ -236,6 +257,11 @@ TOPICS = [
      rss("https://www.reddit.com/r/comfyui/hot/.rss?limit=15", include=IMAGE_TERMS + ["workflow", "ComfyUI"]),
      rss("https://www.reddit.com/r/FluxAI/hot/.rss?limit=15", include=IMAGE_TERMS + ["Flux"]),
      gn('"Flux.1" OR "SD 3.5" OR "Stable Diffusion 3.5" OR ComfyUI OR SDXL OR "Playground v2.5" OR HiDream OR "NVIDIA SANA" OR "Kolors model"',
+        include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     # ★2026-09-18 盛々: 商用トップ製品の速報(Nano Banana/Ideogram/Recraft/Midjourney/Qwen-Image等)
+     gn('"Nano Banana" OR "Ideogram 3" OR "Recraft V3" OR "Midjourney V7" OR "Qwen-Image" OR "Flux Krea" OR "Flux Pro" OR "HiDream I1"',
+        include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
+     gn('"Nano-Banana" OR "Gemini Image" OR "Ideogram v3" OR "Recraft AI" OR "Midjourney V6.1" OR Chroma OR "Wan Image"',
         include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
      gn('"画像生成AI" OR "AI画像生成" OR "ComfyUI" OR "Automatic1111" -幽遊白書 -蔵馬 -"美容ブランド" -"La Sana" -"美髪指南" -玩具人 -"タッグを組"',
         include=IMAGE_TERMS, exclude=IMAGE_EXCLUDE, title_exclude=LOCAL_TITLE_EXCLUDE),
