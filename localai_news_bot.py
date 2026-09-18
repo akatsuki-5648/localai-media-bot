@@ -199,7 +199,12 @@ TOPICS = [
      rss("https://export.arxiv.org/rss/eess.AS", include=TTS_TERMS),
      # ★2026-09-16 盛々: Qiitaタグ追加(実測 fresh 2件・低頻度だが日本語良質)
      rss("https://qiita.com/tags/voicevox/feed", include=TTS_TERMS + ["VOICEVOX", "音声合成"]),
-     rss("https://qiita.com/tags/%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90/feed", include=TTS_TERMS + ["音声合成", "TTS"])]},
+     rss("https://qiita.com/tags/%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90/feed", include=TTS_TERMS + ["音声合成", "TTS"]),
+     # ★2026-09-18 v4: rss_discover実測 + TTS include フィルタ
+     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=TTS_TERMS + ["TTS", "voice", "speech synthesis"]),
+     rss("https://www.marktechpost.com/feed/", include=TTS_TERMS + ["TTS", "voice", "text-to-speech"]),
+     rss("https://arstechnica.com/ai/feed/", include=TTS_TERMS + ["TTS", "voice", "text-to-speech"]),
+     rss("https://simonwillison.net/atom/everything/", include=TTS_TERMS + ["TTS", "voice"])]},
 
  {"num":"🎵","name":"ローカル音楽ai速報","env":"MUSIC","color":COL_MUSIC,"sources":[
      rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=15", include=MUSIC_TERMS),
@@ -222,7 +227,14 @@ TOPICS = [
      rss("https://export.arxiv.org/rss/cs.SD", include=MUSIC_TERMS),
      # ★2026-09-16 盛々: r/AImusic/hot(実測fresh28) + Qiita音楽生成タグ
      rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=30", include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE),
-     rss("https://qiita.com/tags/%E9%9F%B3%E6%A5%BD%E7%94%9F%E6%88%90/feed", include=MUSIC_TERMS + ["音楽", "作曲"])]},
+     rss("https://qiita.com/tags/%E9%9F%B3%E6%A5%BD%E7%94%9F%E6%88%90/feed", include=MUSIC_TERMS + ["音楽", "作曲"]),
+     # ★2026-09-18 v4: r/suno, r/udiomusic ★★激裏で見つけた専門コミュニティ + rss_discover実測
+     rss("https://www.reddit.com/r/suno/hot/.rss?limit=25", include=MUSIC_TERMS + ["Suno", "music", "song"], exclude=MUSIC_EXCLUDE),
+     rss("https://www.reddit.com/r/udiomusic/hot/.rss?limit=15", include=MUSIC_TERMS + ["Udio", "music"], exclude=MUSIC_EXCLUDE),
+     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=MUSIC_TERMS + ["music AI", "音楽AI", "AI music"]),
+     rss("https://www.marktechpost.com/feed/", include=MUSIC_TERMS + ["music", "audio"]),
+     rss("https://arstechnica.com/ai/feed/", include=MUSIC_TERMS + ["music", "audio"]),
+     rss("https://simonwillison.net/atom/everything/", include=MUSIC_TERMS + ["music", "audio"])]},
 
  {"num":"🎬","name":"ローカル動画ai速報","env":"VIDEO","color":COL_VIDEO,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/search.rss?q=video+OR+animate+OR+Wan&restrict_sr=on&sort=new&limit=25",
@@ -250,7 +262,13 @@ TOPICS = [
      rss("https://export.arxiv.org/rss/cs.CV", include=VIDEO_TERMS + ["video generation", "text-to-video", "video diffusion"]),
      # ★2026-09-16 盛々: Qiitaタグ追加
      rss("https://qiita.com/tags/animatediff/feed", include=VIDEO_TERMS + ["動画", "video"]),
-     rss("https://qiita.com/tags/%E5%8B%95%E7%94%BB%E7%94%9F%E6%88%90/feed", include=VIDEO_TERMS + ["動画生成", "video"])]},
+     rss("https://qiita.com/tags/%E5%8B%95%E7%94%BB%E7%94%9F%E6%88%90/feed", include=VIDEO_TERMS + ["動画生成", "video"]),
+     # ★2026-09-18 v4: r/aivideo ★★+ rss_discover実測 + VIDEO include フィルタ
+     rss("https://www.reddit.com/r/aivideo/hot/.rss?limit=25", include=VIDEO_TERMS + ["video AI", "動画AI"], exclude=VIDEO_EXCLUDE),
+     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=VIDEO_TERMS + ["video AI", "AI video"], exclude=VIDEO_EXCLUDE),
+     rss("https://www.marktechpost.com/feed/", include=VIDEO_TERMS + ["video generation", "video model"]),
+     rss("https://arstechnica.com/ai/feed/", include=VIDEO_TERMS + ["video generation", "video AI"]),
+     rss("https://simonwillison.net/atom/everything/", include=VIDEO_TERMS + ["video generation"])]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/hot/.rss?limit=30", include=IMAGE_TERMS),
@@ -283,7 +301,13 @@ TOPICS = [
      rss("https://qiita.com/tags/comfyui/feed", include=IMAGE_TERMS + ["ComfyUI"]),
      rss("https://zenn.dev/topics/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90/feed", include=IMAGE_TERMS + ["画像生成", "拡散"]),
      rss("https://zenn.dev/topics/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/feed", include=IMAGE_TERMS + ["画像生成", "拡散"]),
-     rss("https://zenn.dev/topics/diffusion/feed", include=IMAGE_TERMS + ["拡散モデル", "diffusion"])]},
+     rss("https://zenn.dev/topics/diffusion/feed", include=IMAGE_TERMS + ["拡散モデル", "diffusion"]),
+     # ★2026-09-18 v4: r/midjourney ★★+ rss_discover実測 + IMAGE include フィルタ
+     rss("https://www.reddit.com/r/midjourney/hot/.rss?limit=25", include=IMAGE_TERMS + ["Midjourney", "image"], exclude=IMAGE_EXCLUDE),
+     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=IMAGE_TERMS + ["image AI", "AI image"], exclude=IMAGE_EXCLUDE),
+     rss("https://www.marktechpost.com/feed/", include=IMAGE_TERMS + ["image generation", "diffusion"]),
+     rss("https://arstechnica.com/ai/feed/", include=IMAGE_TERMS + ["image generation", "image AI"]),
+     rss("https://simonwillison.net/atom/everything/", include=IMAGE_TERMS + ["image generation"])]},
 
  {"num":"🔧","name":"ローカル学習・finetune速報","env":"FINETUNE","color":COL_FINETUNE,"sources":[
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=finetune+OR+LoRA+OR+DPO+OR+Unsloth&restrict_sr=on&sort=new&limit=25",
@@ -308,7 +332,12 @@ TOPICS = [
      rss("https://qiita.com/tags/lora/feed", include=FINETUNE_TERMS + ["LoRA", "学習"], exclude=FINETUNE_EXCLUDE),
      rss("https://qiita.com/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/feed", include=FINETUNE_TERMS + ["ファインチューニング", "LoRA"]),
      rss("https://zenn.dev/topics/qlora/feed", include=FINETUNE_TERMS + ["QLoRA", "LoRA"]),
-     rss("https://zenn.dev/topics/unsloth/feed", include=FINETUNE_TERMS + ["Unsloth"])]},
+     rss("https://zenn.dev/topics/unsloth/feed", include=FINETUNE_TERMS + ["Unsloth"]),
+     # ★2026-09-18 v4: rss_discover実測 + FINETUNE include フィルタ
+     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=FINETUNE_TERMS + ["fine-tuning", "LoRA", "training"]),
+     rss("https://www.marktechpost.com/feed/", include=FINETUNE_TERMS + ["fine-tuning", "LoRA", "training"]),
+     rss("https://arstechnica.com/ai/feed/", include=FINETUNE_TERMS + ["fine-tuning", "training"]),
+     rss("https://simonwillison.net/atom/everything/", include=FINETUNE_TERMS + ["fine-tuning", "LoRA"])]},
 ]
 
 def gn_url(q):
