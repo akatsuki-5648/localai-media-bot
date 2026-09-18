@@ -200,11 +200,9 @@ TOPICS = [
      # ★2026-09-16 盛々: Qiitaタグ追加(実測 fresh 2件・低頻度だが日本語良質)
      rss("https://qiita.com/tags/voicevox/feed", include=TTS_TERMS + ["VOICEVOX", "音声合成"]),
      rss("https://qiita.com/tags/%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90/feed", include=TTS_TERMS + ["音声合成", "TTS"]),
-     # ★2026-09-18 v4: rss_discover実測 + TTS include フィルタ
-     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=TTS_TERMS + ["TTS", "voice", "speech synthesis"]),
+     # ★2026-09-18 v5: 中途半端追加を削除、実測で fresh 確認できた MarkTechPost + VOICEVOX releases だけ残す
      rss("https://www.marktechpost.com/feed/", include=TTS_TERMS + ["TTS", "voice", "text-to-speech"]),
-     rss("https://arstechnica.com/ai/feed/", include=TTS_TERMS + ["TTS", "voice", "text-to-speech"]),
-     rss("https://simonwillison.net/atom/everything/", include=TTS_TERMS + ["TTS", "voice"])]},
+     rss("https://github.com/VOICEVOX/voicevox/releases.atom", include=TTS_TERMS + ["VOICEVOX", "音声"])]},
 
  {"num":"🎵","name":"ローカル音楽ai速報","env":"MUSIC","color":COL_MUSIC,"sources":[
      rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=15", include=MUSIC_TERMS),
@@ -228,13 +226,10 @@ TOPICS = [
      # ★2026-09-16 盛々: r/AImusic/hot(実測fresh28) + Qiita音楽生成タグ
      rss("https://www.reddit.com/r/AImusic/hot/.rss?limit=30", include=MUSIC_TERMS, exclude=MUSIC_EXCLUDE),
      rss("https://qiita.com/tags/%E9%9F%B3%E6%A5%BD%E7%94%9F%E6%88%90/feed", include=MUSIC_TERMS + ["音楽", "作曲"]),
-     # ★2026-09-18 v4: r/suno, r/udiomusic ★★激裏で見つけた専門コミュニティ + rss_discover実測
+     # ★2026-09-18 v5: MUSICはGitHub Releases使えない(Suno/Udio独自PF)。中途半端削除・専門Redditと MarkTechPost だけ
      rss("https://www.reddit.com/r/suno/hot/.rss?limit=25", include=MUSIC_TERMS + ["Suno", "music", "song"], exclude=MUSIC_EXCLUDE),
      rss("https://www.reddit.com/r/udiomusic/hot/.rss?limit=15", include=MUSIC_TERMS + ["Udio", "music"], exclude=MUSIC_EXCLUDE),
-     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=MUSIC_TERMS + ["music AI", "音楽AI", "AI music"]),
-     rss("https://www.marktechpost.com/feed/", include=MUSIC_TERMS + ["music", "audio"]),
-     rss("https://arstechnica.com/ai/feed/", include=MUSIC_TERMS + ["music", "audio"]),
-     rss("https://simonwillison.net/atom/everything/", include=MUSIC_TERMS + ["music", "audio"])]},
+     rss("https://www.marktechpost.com/feed/", include=MUSIC_TERMS + ["music", "audio"])]},
 
  {"num":"🎬","name":"ローカル動画ai速報","env":"VIDEO","color":COL_VIDEO,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/search.rss?q=video+OR+animate+OR+Wan&restrict_sr=on&sort=new&limit=25",
@@ -263,12 +258,16 @@ TOPICS = [
      # ★2026-09-16 盛々: Qiitaタグ追加
      rss("https://qiita.com/tags/animatediff/feed", include=VIDEO_TERMS + ["動画", "video"]),
      rss("https://qiita.com/tags/%E5%8B%95%E7%94%BB%E7%94%9F%E6%88%90/feed", include=VIDEO_TERMS + ["動画生成", "video"]),
-     # ★2026-09-18 v4: r/aivideo ★★+ rss_discover実測 + VIDEO include フィルタ
+     # ★★2026-09-18 v5: 実測で見つけた核心 ── r/StableDiffusion+animate/video/Wan 検索 = 24h=16件・168h=30件
+     rss("https://www.reddit.com/r/StableDiffusion/search.rss?q=animate+OR+video+OR+Wan+OR+HunyuanVideo+OR+LTX+OR+Mochi&restrict_sr=on&sort=new&limit=30",
+         include=VIDEO_TERMS + ["video", "animate"], exclude=VIDEO_EXCLUDE),
      rss("https://www.reddit.com/r/aivideo/hot/.rss?limit=25", include=VIDEO_TERMS + ["video AI", "動画AI"], exclude=VIDEO_EXCLUDE),
-     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=VIDEO_TERMS + ["video AI", "AI video"], exclude=VIDEO_EXCLUDE),
      rss("https://www.marktechpost.com/feed/", include=VIDEO_TERMS + ["video generation", "video model"]),
-     rss("https://arstechnica.com/ai/feed/", include=VIDEO_TERMS + ["video generation", "video AI"]),
-     rss("https://simonwillison.net/atom/everything/", include=VIDEO_TERMS + ["video generation"])]},
+     # ★2026-09-18 v5: GitHub Releases 実測でfresh確認できたVIDEOモデル
+     rss("https://github.com/Tencent-Hunyuan/HunyuanVideo/releases.atom", include=VIDEO_TERMS + ["HunyuanVideo", "release"]),
+     rss("https://github.com/Lightricks/LTX-Video/releases.atom", include=VIDEO_TERMS + ["LTX-Video", "release"]),
+     rss("https://github.com/hpcaitech/Open-Sora/releases.atom", include=VIDEO_TERMS + ["Open-Sora", "release"]),
+     rss("https://github.com/THUDM/CogVideo/releases.atom", include=VIDEO_TERMS + ["CogVideoX", "release"])]},
 
  {"num":"🖼️","name":"ローカル画像ai速報","env":"IMAGE","color":COL_IMAGE,"sources":[
      rss("https://www.reddit.com/r/StableDiffusion/hot/.rss?limit=30", include=IMAGE_TERMS),
@@ -302,12 +301,11 @@ TOPICS = [
      rss("https://zenn.dev/topics/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90/feed", include=IMAGE_TERMS + ["画像生成", "拡散"]),
      rss("https://zenn.dev/topics/%E7%94%BB%E5%83%8F%E7%94%9F%E6%88%90ai/feed", include=IMAGE_TERMS + ["画像生成", "拡散"]),
      rss("https://zenn.dev/topics/diffusion/feed", include=IMAGE_TERMS + ["拡散モデル", "diffusion"]),
-     # ★2026-09-18 v4: r/midjourney ★★+ rss_discover実測 + IMAGE include フィルタ
+     # ★2026-09-18 v5: 中途半端追加を削除、実測で fresh 確認できたものだけ
      rss("https://www.reddit.com/r/midjourney/hot/.rss?limit=25", include=IMAGE_TERMS + ["Midjourney", "image"], exclude=IMAGE_EXCLUDE),
-     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=IMAGE_TERMS + ["image AI", "AI image"], exclude=IMAGE_EXCLUDE),
      rss("https://www.marktechpost.com/feed/", include=IMAGE_TERMS + ["image generation", "diffusion"]),
-     rss("https://arstechnica.com/ai/feed/", include=IMAGE_TERMS + ["image generation", "image AI"]),
-     rss("https://simonwillison.net/atom/everything/", include=IMAGE_TERMS + ["image generation"])]},
+     # ★GitHub Releases 実測で 168h fresh 2件確認済み(ComfyUI)
+     rss("https://github.com/NVlabs/Sana/releases.atom", include=IMAGE_TERMS + ["Sana", "release"])]},
 
  {"num":"🔧","name":"ローカル学習・finetune速報","env":"FINETUNE","color":COL_FINETUNE,"sources":[
      rss("https://www.reddit.com/r/LocalLLaMA/search.rss?q=finetune+OR+LoRA+OR+DPO+OR+Unsloth&restrict_sr=on&sort=new&limit=25",
@@ -333,11 +331,10 @@ TOPICS = [
      rss("https://qiita.com/tags/%E6%A9%9F%E6%A2%B0%E5%AD%A6%E7%BF%92/feed", include=FINETUNE_TERMS + ["ファインチューニング", "LoRA"]),
      rss("https://zenn.dev/topics/qlora/feed", include=FINETUNE_TERMS + ["QLoRA", "LoRA"]),
      rss("https://zenn.dev/topics/unsloth/feed", include=FINETUNE_TERMS + ["Unsloth"]),
-     # ★2026-09-18 v4: rss_discover実測 + FINETUNE include フィルタ
-     rss("https://www.reddit.com/r/singularity/new/.rss?limit=25", include=FINETUNE_TERMS + ["fine-tuning", "LoRA", "training"]),
+     # ★2026-09-18 v5: 中途半端追加を削除、実測で fresh 確認できたものだけ
      rss("https://www.marktechpost.com/feed/", include=FINETUNE_TERMS + ["fine-tuning", "LoRA", "training"]),
-     rss("https://arstechnica.com/ai/feed/", include=FINETUNE_TERMS + ["fine-tuning", "training"]),
-     rss("https://simonwillison.net/atom/everything/", include=FINETUNE_TERMS + ["fine-tuning", "LoRA"])]},
+     # ★unsloth releases 168h fresh 2件・24h 1件確認済み
+     rss("https://github.com/unslothai/unsloth/releases.atom", include=FINETUNE_TERMS + ["Unsloth", "improve"])]},
 ]
 
 def gn_url(q):
